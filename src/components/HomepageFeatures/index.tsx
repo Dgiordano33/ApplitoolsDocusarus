@@ -10,17 +10,16 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Quick Starts',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Get started with the Applitools SDK in your language or framework of choice. Integrate Applitools with over 60 different tools.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Documentation',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
@@ -30,12 +29,11 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Tutorials',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Take your visual testing to the next level with action-packed, intuitive tutorials based on real-world use cases.
       </>
     ),
   },
