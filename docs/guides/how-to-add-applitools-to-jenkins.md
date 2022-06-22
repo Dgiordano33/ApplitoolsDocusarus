@@ -1,8 +1,9 @@
 ---
 sidebar_position: 6
+title: How to add Applitools to Jenkins
 ---
 
-# Congratulations!
+# How to add Applitools to Jenkins
 
 You have just learned the **basics of Docusaurus** and made some changes to the **initial template**.
 
