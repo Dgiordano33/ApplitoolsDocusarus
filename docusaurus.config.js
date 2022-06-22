@@ -9,7 +9,7 @@ const config = {
   title: 'Appltiools Docs',
   tagline: 'Get started visual testing today ',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/tutorials/',
+  baseUrl: '/',
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/favicon.ico',
