@@ -10,8 +10,8 @@ const config = {
   tagline: 'Get started visual testing today ',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/tutorials/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'ignore',
+  onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.
