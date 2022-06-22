@@ -4,6 +4,8 @@ title: Introduction
 description: My document description
 hide_table_of_contents: true
 ---
+
+import Link from '@docusaurus/Link'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 import ThemedImage from '@theme/ThemedImage'
 import AngularLogo from '@site/static/img/libraries/angular-icon.svg'
@@ -11,17 +13,16 @@ import SeleniumLogo from '@site/static/img/libraries/selenium-icon.svg'
 import CypressLogo from '@site/static/img/libraries/cypress-icon.svg'
 import PlaywrightLogo from '@site/static/img/libraries/playwright-icon.svg'
 import PuppetteerLogo from '@site/static/img/libraries/puppetteer-icon.svg'
-import Link from '@docusaurus/Link'
 const webframeworks = [
   {
     name: 'Selenium',
     logo: SeleniumLogo,
-    href: '/docs/guides/with-angular',
+    href: '/tutorials/category/selenium',
   },
   {
     name: 'Cypress',
     logo: CypressLogo,
-    href: '/docs/guides/with-angular',
+    href: '/tutorials/quickstart/web/cypress',
   },
   {
     name: 'Playwright',
@@ -62,7 +63,7 @@ const webframeworks = [
     name: 'LeanFT',
     logo: AngularLogo,
     href: '/docs/guides/with-angular',
-  },
+  }
 ]
 const mobileframeworks = [
   {
@@ -116,16 +117,6 @@ const codeless = [
   },
 ]
 
-
-
-<head>
-  <title>Visual Testing Tutorials</title>
-  <meta
-    name="description"
-    content="Applitools Test Cloud is a visual testing platform that uses Visual AI to validate the UI or Components of web and mobile applications. "
-  />
-</head>
-
 Applitools is a visual testing platform that uses Visual AI to validate the UI or Components of web and mobile applications. 
 
 
@@ -136,7 +127,7 @@ The Applitools Test Cloud is made up of several distinct modules that can be use
  <div className="">
   <div className="row">
      <div class="col col--6">
-      <Link class="card" to="/docs/guides/database">
+      <Link class="card" to="/tutorials/platform/applitools-eyes/overview">
         <div class="card__body">
           <h4>Eyes</h4>
           <p>The industry leading Visual AI engine.</p>
@@ -144,7 +135,7 @@ The Applitools Test Cloud is made up of several distinct modules that can be use
       </Link>
     </div>
     <div class="col col--6">
-      <Link class="card" to="/docs/guides/database">
+      <Link class="card" to="/tutorials/platform/applitools-ufg">
         <div class="card__body">
           <h4>Ultrafast Test Grid</h4>
           <p>A cloud-based testing grid for web and mobile browsers.</p>
@@ -154,7 +145,7 @@ The Applitools Test Cloud is made up of several distinct modules that can be use
   </div>
   <div className="row">
     <div class="col col--6">
-      <Link class="card" to="/docs/guides/database">
+      <Link class="card" to="/tutorials/platform/applitools-nmg">
         <div class="card__body">
           <h4>Native Mobile Grid</h4>
            <p>A cloud-based testing grid for Mobile Devices.</p>
