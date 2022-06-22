@@ -3,202 +3,326 @@ sidebar_position: 2
 title: Cypress
 ---
 
-# Cypress Tutorial
+# Cypress Tutorials
 
-## Getting Started with Applitools
+This tutorial will show you how to automate visual tests using the Applitools Ultrafast Grid with Cypress in JavaScript.
+[Applitools Ultrafast Test Cloud](https://applitools.com/platform/)
+can help you catch functional and visual problems that traditional automation struggles to find.
+It can also help you to scale your tests to cover all browsers and devices in seconds.
+The Applitools Eyes SDK for Cypress does *not* support the Classic runner – it supports only the Ultrafast Grid.
 
-Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+In this tutorial, you will:
 
-* [🤖 How it Works](/overview/how-it-works.html)
-* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
-* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+1. Set up your local machine for testing.
+2. Clone the example project repository.
+3. Learn how to automate visual testing with Applitools Eyes.
+4. Run the visual tests and review results in the Applitools dashboard.
 
-## Running Tests with Applitools
+After setting up your machine,
+this tutorial should take **about 15 minutes** to complete.
+If you get stuck along the way,
+please [reach out to us for help](https://help.applitools.com/hc/en-us/requests/new)!
 
-## Prerequisites
+:::tip Quickstart
 
-1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+If you prefer a quickstart instead of a full tutorial,
+clone the [example repository](https://github.com/applitools/example-cypress-javascript-ufg)
+and follow the [README](https://github.com/applitools/example-cypress-javascript-ufg/blob/master/README.md) instructions!
+:::
 
-  ::: tip Tip: Unsure how to set up your API key?
-  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
-  :::
+## Recognizing project structure
 
-2. Node.js <https://nodejs.org>
+The example project uses:
 
-3. Git <https://git-scm.com>
-
-  ::: tip Note: Installing `git` is optional
-  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
-  :::
-
-4. Google Chrome Browser <https://www.google.com/chrome/>
+* [JavaScript](https://www.javascript.com/) as the programming language
+* [Cypress](https://www.cypress.io/) for browser automation
+* [Google Chrome](https://www.google.com/chrome/downloads/) as the local browser for testing
+* [npm](https://www.npmjs.com/) for dependency management
+* [Applitools Eyes](https://applitools.com/platform/eyes/) for visual testing
+* [Applitools Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/) for cross-browser execution
 
 
-### Running the Example Project
+## Setting up your machine
 
-1. Clone or download the repository and navigate to that folder
+You'll need a few things to run this tutorial:
+
+1. An [Applitools account](https://auth.applitools.com/users/register),
+   which you can register for free.
+
+2. [Node.js](https://nodejs.org/en/download/), version 12 or higher.
+
+3. A good JavaScript editor like [Visual Studio Code](https://code.visualstudio.com/docs/languages/javascript).
+
+4. Up-to-date versions of the following browsers:
+   * [Google Chrome](https://www.google.com/chrome/)
+   * [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/)
+   * [Microsoft Edge](https://www.microsoft.com/en-us/edge)
+
+
+## Downloading the example project
+
+The example project is located at
+[https://github.com/applitools/example-cypress-javascript-ufg](https://github.com/applitools/example-cypress-javascript-ufg).
+Clone this repository to your local machine:
+
 ```
-git clone https://github.com/applitools/tutorial-cypress.git
-cd tutorial-cypress
-```
-*Note: you can alternatively download the project as a Zip file and extract it*
-
-2. Install the dependencies
-```
-npm install
+$ git clone https://github.com/applitools/example-cypress-javascript-ufg.git
+$ cd example-cypress-javascript-ufg
 ```
 
-3. Set up Applitools Eyes
-```
-npx eyes-setup
+*Note: If you don't have Git installed,
+then instead of running `git clone`,
+you can [download the project as a ZIP file](https://github.com/applitools/example-cypress-javascript-ufg/archive/refs/heads/master.zip)
+and extract it.*
+
+
+## Understanding the dependencies
+
+The example project uses [npm](https://www.npmjs.com/) for package management.
+It contains the following dependencies for the 
+[Applitools Eyes SDK for Cypress](https://www.npmjs.com/package/@applitools/eyes-cypress)
+as well as Cypress itself:
+
+```json
+  "dependencies": {
+    "@applitools/eyes-cypress": "^3.26.1",
+    "cypress": "^9.7.0"
+  }
 ```
 
-4. Run the example test
-
-To run all of the tests in interactive mode, run:
+:::tip Adding Applitools to Another Cypress Project?
+This example project already has the Applitools Eyes SDK as a dependency.
+If you want to add the Applitools Eyes SDK as a new dependency to another Cypress project,
+run the following commands:
 
 ```
-APPLITOOLS_API_KEY="[Your API Key]" npm run cypress:open
-```
-
-::: tip Running your tests on Windows?
-Before running the command with npm, add the `APPLITOOLS_API_KEY` variable to your environment with:
-```
-set APPLITOOLS_API_KEY='YOUR_API_KEY'
+$ npm install @applitools/eyes-cypress
+$ npx eyes-setup
 ```
 :::
 
-Then click on the `ultraFastGrid.spec.js` test. The tests uses Chrome just once and sends the DOM snapshot to the Ultrafast Grid. The Grid will then render the DOM snapshot in the cloud. You need to wait 15-30 seconds.
 
-To run all of the tests inside of the terminal, run:
+## Understanding the code
 
-```
-APPLITOOLS_API_KEY="[Your API Key]" npm test
-```
+The project contains one visual test case,
+which is located at `cypress/integration/acme-bank.spec.js`.
 
-  ::: tip
-  The project additionally has a CI mode configured,
-  which will run all of the tests inside of the terminal
-  in headless mode. You can run this with: `npm run test:ci`
-  :::
+`acme-bank.spec.js` is a Cypress test module that covers login behavior for the [ACME Bank demo web app](https://demo.applitools.com).
+It uses the [Applitools Eyes SDK for Cypress](https://www.npmjs.com/package/@applitools/eyes-cypress)
+to capture visual checkpoints.
+The code is rather concise.
+In-line comments explain every section.
+Read it top to bottom to understand how it works:
 
+```javascript
+/// <reference types="cypress" />
 
-### Adding Applitools Eyes to an Existing Node.js Cypress Project
+// This test case spec contains everything needed to run a full visual test against the ACME bank site.
+// The file `applitools.config.js` specifies how to run this test against multiple browsers in Applitools Ultrafast Grid.
 
-Install Applitools Eyes dependencies:
+// This "describe" method contains related test cases with per-test setup and cleanup.
+// In this example, there is only one test.
+describe('ACME Bank', () => {
 
-```sh
-npm install @applitools/eyes-cypress --save-dev
-```
+    // This method performs setup before each test.
+    beforeEach(() => {
 
-### Sample test
-
-```js
-describe("AppTest", () => {
-
-    it(`ultraFastTest`, function () {
-        // Navigate to the url we want to test
-        // ⭐️ Note to see visual bugs, run the test using the above URL for the 1st run.
-        // but then change the above URL to https://demo.applitools.com/index_v2.html
-        // (for the 2nd run)
-        cy.visit('https://demo.applitools.com');
-
-        // Call Open on eyes to initialize a test session
+        // Open Eyes to start visual testing.
+        // Each test should open its own Eyes for its own snapshots.
         cy.eyesOpen({
-            appName: 'Demo App',
-            testName: 'Ultrafast grid demo',
+            appName: 'ACME Bank',                       // The name of the app under test
+            testName: Cypress.currentTest.title,        // The name of the test case
         })
+    })
 
-        // check the login page with fluent api, see more info here
-        // https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
+    // This test covers login for the Applitools demo site, which is a dummy banking app.
+    // The interactions use typical Cypress calls,
+    // but the verifications use one-line snapshot calls with Applitools Eyes.
+    // If the page ever changes, then Applitools will detect the changes and highlight them in the dashboard.
+    // Traditional assertions that scrape the page for text values are not needed here.
+    it('should log into a bank account', () => {
+
+        // Load the login page.
+        cy.visit('https://demo.applitools.com')
+
+        // Verify the full login page loaded correctly.
         cy.eyesCheckWindow({
-            tag: "Login Window",
+            tag: "Login page",
             target: 'window',
             fully: true
         });
 
+        // Perform login.
+        cy.get('#username').type('andy')
+        cy.get('#password').type('i<3pandas')
         cy.get('#log-in').click()
 
-        // Check the app page
+        // Verify the full main page loaded correctly.
+        // This snapshot uses LAYOUT match level to avoid differences in closing time text.
         cy.eyesCheckWindow({
-            tag: "App Window",
+            tag: "Main page",
             target: 'window',
-            fully: true
+            fully: true,
+            matchLevel: 'Layout'
         });
+    })
 
-        // Call Close on eyes to let the server know it should display the results
+    // This method performs cleanup after each test.
+    afterEach(() => {
+        
+        // Close Eyes to tell the server it should display the results.
         cy.eyesClose()
-    });
-
-});
-```
-
-Add `applitools.config.js` to the root of your project with: 
-
-```js
-module.exports = {
-    testConcurrency: 1,
-    apiKey: 'APPLITOOLS_API_KEY',
-    browser: [
-        // Add browsers with different viewports
-        {width: 800, height: 600, name: 'chrome'},
-        {width: 700, height: 500, name: 'firefox'},
-        {width: 1600, height: 1200, name: 'ie11'},
-        {width: 1024, height: 768, name: 'edgechromium'},
-        {width: 800, height: 600, name: 'safari'},
-        // Add mobile emulation devices in Portrait mode
-        {deviceName: 'iPhone X', screenOrientation: 'portrait'},
-        {deviceName: 'Pixel 2', screenOrientation: 'portrait'}
-    ],
-    // set batch name to the configuration
-    batchName: 'Ultrafast Batch'
-}
-```
-
-### Optional - Capture Test Results
-Use the below API to interact with the test results from your test. This API should be called after your call to `cy.eyesClose`:
-
-```js
-after(() => {
-  cy.eyesGetAllTestResults().then(summary => {
-    console.log(summary)
-  })
+    })
 })
 ```
 
-## Applitools Eyes Cypress SDK
+The `applitools.config.js` file in the project root directory
+provides the configuration to run this visual test across multiple browsers in the Ultrafast Grid.
+Its configuration applies to *all* test cases in the project:
 
-### How it works
+```javascript
+// This config file specifies how to run visual tests with Applitools.
+// It applies to all tests in this project.
 
-The Applitools Eyes Cypress SDK is a simple plugin to Cypress. Once installed, it adds few commands to the main `cy` object. Specifically, it adds three main methods, `cy.eyesOpen` to start the test, `cy.eyesCheckWindow` to take screenshots (for each test step) and `cy.eyesClose` to close the test.
+module.exports = {
 
-::: tip Note: Supports Chrome, Firefox and Mobile simulators
-The interesting thing is that even though you run your Cypress tests using Chrome browser, you can still add visual validations using both Chrome and Firefox! This is because we upload the DOM and assets to our Visual Grid that was rendered in Chrome and open it in Firefox or Chrome as per the settings. The same thing happens in mobile simulators as well.
+    // Concurrency refers to the number of visual checkpoints Applitools will perform in parallel.
+    // Warning: If you have a free account, then concurrency will be limited to 1.
+    testConcurrency: 5,
+
+    // To connect visual test results to your account,
+    // you must set the `APPLITOOLS_API_KEY` environment variable to your Applitools API key.
+    // To find it: https://applitools.com/tutorials/getting-started/setting-up-your-environment.html
+    // If you don't explicitly set the API key here,
+    // then the SDK will automatically read the `APPLITOOLS_API_KEY` environment variable to fetch it.
+    apiKey: 'APPLITOOLS_API_KEY',
+    
+    // A batch is the collection of visual checkpoints for a test suite.
+    // Batches are displayed in the dashboard, so use meaningful names.
+    batchName: 'Applitools Example: Cypress JavaScript with the Ultrafast Grid',
+
+    // Applitools can run checkpoints for snapshots against any browser in the Ultrafast Grid.
+    // This setting defines 5 unique browser configurations to test.
+    browser: [
+
+        // Add 3 desktop browsers with different viewports for cross-browser testing in the Ultrafast Grid.
+        // Other browsers are also available, like Edge and IE.
+        {width: 800, height: 600, name: 'chrome'},
+        {width: 1600, height: 1200, name: 'firefox'},
+        {width: 1024, height: 768, name: 'safari'},
+
+        // Add 2 mobile emulation devices with different orientations for cross-browser testing in the Ultrafast Grid.
+        // Other mobile devices are available, including iOS.
+        {deviceName: 'Pixel 2', screenOrientation: 'portrait'},
+        {deviceName: 'Nexus 10', screenOrientation: 'landscape'},
+    ]
+}
+```
+
+
+## Preparing for test execution
+
+Before running the visual test,
+you must [find your Applitools API key](https://applitools.com/tutorials/getting-started/setting-up-your-environment.html)
+and set it as an environment variable named `APPLITOOLS_API_KEY`.
+
+On macOS and Linux:
+
+```
+$ export APPLITOOLS_API_KEY=<your-api-key>
+```
+
+On Windows:
+
+```
+> set APPLITOOLS_API_KEY=<your-api-key>
+```
+
+::: tip Environment Variable Trouble
+If you have trouble setting the `APPLITOOLS_API_KEY` environment variable,
+you can hard-code your API key into `applitools.config.js` like this:
+
+```java
+// apiKey: 'APPLITOOLS_API_KEY',
+apiKey: '<your-api-key>',
+```
+
+However, be warned: **hard-coding secrets is poor practice**.
+Do this only temporarily for debugging,
+and *never* commit hard-coded secrets to version control.
+:::
+
+::: tip Applitools Eyes Server
+By default, tests will use the public Applitools Eyes server at `eyes.applitools.com`.
+However, if your team is using a [private Applitools Eyes server](https://help.applitools.com/hc/en-us/articles/360007189231-The-different-deployment-modes),
+you can target it by setting the `APPLITOOLS_SERVER_URL` environment variable.
+:::
+
+Next, you must install project dependencies and set up Applitools Eyes.
+Run the following commands (which work for any OS):
+
+```
+$ npm install
+$ npx eyes-setup
+```
+
+
+## Running the visual test
+
+To open the Cypress window for launching tests, run:
+
+```
+$ npx cypress open
+```
+
+If you want to run tests directly from the command line, run this instead:
+
+```
+$ npx cypress run
+```
+
+Once your tests run, you should see results in the
+[Applitools dashboard](https://applitools.com/docs/topics/test-manager/pages/tm-ui-overview.html).
+For your batch, there should be 5 tests (one for each browser configuration),
+each with 2 visual snapshots.
+
+You can also change the web page to inject visual bugs:
+
+```javascript
+// cy.visit('https://demo.applitools.com')
+cy.visit('https://demo.applitools.com/index_v2.html')
+```
+
+If you rerun the tests, then they should yield "unresolved" results for you to review.
+Visual differences will be highlighted in magenta.
+It's up to you to accept (👍) or reject (👎) the changes.
+Applitools will remember your decisions for future analysis.
+
+:::caution Having Trouble?
+Don't suffer in silence!
+Let us help you.
+Please [reach out to us](https://help.applitools.com/hc/en-us/requests/new) to get your project working.
 :::
 
 
-The picture below shows how it works
+## Taking the next steps
 
-1. You run the Cypress test as usual
+Congratulations on completing this tutorial!
+There's still so much to learn about visual testing with Applitools,
+but you're off to a great start.
 
-2. Everytime you call `cy.eyesCheckWindow`, the SDK grabs the DOM and other assets asynchronously. And stores it locally until all the tests are done.
+Here are resources for your next steps:
 
-3. Once all the Cypress tests are done, the SDK uploads all the assets to the Visual Grid server
+1. [🤖 How Applitools Works](https://applitools.com/tutorials/overview/how-it-works.html)
+2. [🖼 Analyzing Differences](https://applitools.com/tutorials/overview/analyzing-differences.html)
+3. [🐞 Reporting Bugs](https://applitools.com/tutorials/getting-started/reporting-bugs-from-applitools.html)
+4. [💥 Troubleshooting Common Issues](https://applitools.com/tutorials/getting-started/common-issues.html)
+5. [🗺 Detailed overview of visual testing with Applitools](https://applitools.com/docs/topics/overview.html)
+6. [👀 Docs for the Applitools Eyes SDK for Cypress](https://www.npmjs.com/package/@applitools/eyes-cypress)
 
-4. The Visual Grid server then opens up the assets in real browsers (Firefox or Chrome), or in mobile simulators, and with appropriate Viewport depending on what was set in the tests. Note that all these happen concurrently in the cloud.
+You can also:
 
-5. As and when the rendering happens, the Applitools Eyes server gets notification about it and the eyes server then compares the pictures using AI and advanced algorithms and shows the results.
-
-### More information
-
-The `@applitools/eyes-cypress` npm package page contain more information about advanced configuration, best practices and troubleshooting. Visit [eyes-cypress SDK repo](https://www.npmjs.com/package/@applitools/eyes-cypress) to find out more about what's possible with Applitools' Cypress SDK.
-
-## Resources
-
-- [Troubleshooting Common Issues](/getting-started/common-issues.html)
-- [Reference documentation](https://applitools.com/docs)
-- [Request a demo](https://applitools.com/request-demo?utm_source=tutorials)
-- [Knowledge base](https://help.applitools.com/hc/en-us/)
-- [File a Ticket](https://help.applitools.com/hc/en-us/requests/new).
-
+* [Request a demo](https://applitools.com/request-demo?utm_source=tutorials)
+* [Explore the Applitools knowledge base](https://help.applitools.com/hc/en-us/)
+* [File a ticket](https://help.applitools.com/hc/en-us/requests/new)
 
