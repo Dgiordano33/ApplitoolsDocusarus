@@ -1,43 +1,36 @@
 ---
 sidebar_position: 3
 ---
-# Applitools UFG
+# Applitools Ultrafast Grid
 
-Applitools easily integrates with your existing tests – no need to create new tests or learn new frameworks. With a single snippet of code, Applitools Eyes captures and analyzes an entire screen of your application.
+In real world testing, you'll need to test your app on multiple browsers, viewports and mobile devices. So you'll need to run and re-run ALL the tests in different browsers and multiple viewports to ensure things are fine - which could take hours and hours to complete. You may also encounter browsers not opening properly, or hanging and what not.
 
-Applitools SDKs support all major automated testing frameworks and allow you  to easily take screenshots of pages, elements, regions or iFrames and upload them along with DOM snapshots to the Applitools Eyes server. Our Visual AI then compares them with previous test executions' screenshots (aka Baselines) and reports if there is a bug or not. It's that simple!
+What if you could run in just one browser, just once, and still do cross-browser tests across various browsers, viewports and multiple mobile emulators? That's where [Ultrafast Grid](https://applitools.com/ultrafast-grid) comes in.
 
-## Baseline vs. Checkpoint images
+:::tip TL;DR
+When you execute this tutorial, it'll run the test locally in Chrome browser but will show results in the following 5 combinations:
 
-When you first run the test, our AI engine stores those first set of screenshots as **Baseline images**. When you run the same test again (and everytime there after), the AI server compares the new set of screenshots, aka **Checkpoint images**, with the corresponding **Baseline images** and highlights differences in a pink color.
+1. Chrome browser (800 X 600 viewport)
+2. Chrome browser (700 X 500 viewport)
+3. Firefox browser  (1200 X 800 viewport)
+4. Firefox browser  (1600 X 1200 viewport)
+5. An iPhone4 emulator
 
-
-## Marking the test as "Pass" or "Fail"
-
-When the AI compares the baseline and the checkpoint image, if it finds a legitimate difference, it will mark the test as **Unresolved**. This is because the AI doesn't know if the difference is because of a new feature or a real bug, and will wait for you to mark it as a Pass/Fail for the 1st time.
-
-If you mark the **Unresolved** checkpoint image as <strong>"Failed"</strong>, it will only mark the current test result as Failed.
-
-
-
-::: tip Note: To automatically mark the checkpoint as a "Fail" in future test runs, you need to do the following:
-  1. Annotate at least one of differences as a "<a href="https://help.applitools.com/hc/en-us/articles/360007188391-Bug-Region-Collaboration-feature-" target="_blank">bug region</a>"
-  2. Select the "Fail tests" checkbox in the popup window
-  3. Press the "Thumbs Up" (not "Thumbs Down") button in the checkpoint image's toolbar
-  4. Press "Save" in the main toolbar
+... all in ~30 seconds!⏰🚀
 :::
 
-If you mark the **Unresolved** checkpoint image as a "Pass", then it means that the difference is due to a new feature so we set the new checkpoint image as the **new baseline** and mark the current test as Pass. Going forward we'll compare any future tests with this new baseline.
+## What Is The Ultrafast Grid?
 
+The [Ultrafast Grid](https://applitools.com/ultrafast-grid) provides an elegant and an ultra fast way to render pages in different browsers, viewports, and mobile simulators and emulators. It then takes screenshots and sends those screenshots to the Applitools AI server. With Ultrafast Grid you just need to run your test in a single browser but perform end-to-end and cross-browser tests in various browsers such as Chrome, Firefox, Safari, IE, and also numerous combinations of viewports and in mobile simulators and emulators -- all in under a minute. Without Ultrafast Grid, you'll be wasting a lot of time and money running those tests in multiple browsers which could take hours and are error-prone.
 
+And since Ultrafast Grid is integrated with our Eyes AI, you'll actually find a lot more functional and visual bugs than you'd normally find.
 
-::: tip Note: Applitools AI has been trained with 100's of millions of images
-It doesn't do pixel-to-pixel comparison as this can lead to a lot of false positives. It instead simulates human eyes that ignore differences that humans can't detect and highlight differences that humans can detect.
+Further, you can use our [Root-Cause-Analysis (RCA)](https://applitools.com/root-cause-analysis) feature to figure out exactly which DOM element or CSS caused each difference! So you can go backwards, from the screenshot to the code!
 
-Our AI's current **accuracy rate is 99.9999%**! Which means for most applications the odds that you'll see false-positives are 1 in a million!
-:::
+**Best part**: All you need to do is to simply make `eyes.check` calls in your **existing Selenium tests** after adding our SDK and instantiating Ultrafast Grid. And that's all there is to it!
 
-## A powerful test results dashboard
-We provide a state-of-the-art dashboard that makes it very easy for you to analyze differences, report bugs, and much more. For more information on the Applitools dashboard check out the [Applitools docs.](https://applitools.com/docs/)
+## How it works
 
+Once you add and instantiate the Applitools SDK, simply add `eyes.check` calls wherever you want to check if the state of the page looks OK. Then run the Selenium test as usual. And while running the tests, anytime it encounters `eyes.check` (or similar methods), Applitools SDK uploads the DOM resource of that page to our [Ultrafast Grid](https://applitools.com/ultrafast-grid) behind the scenes and in batches. The Ultrafast Grid then renders every page in different browsers and mobile emulators (in parallel) and takes screenshots as per the configuration you set. Finally, it sends those screenshots to our AI Server.
 
+When you first run the test,  our AI server simply stores those 1st set of screenshots as **Baseline images**. When you run the same test again, the AI server will compare the new set of screenshots, aka **Checkpoint images**, with the corresponding **Baseline images** and highlight bugs.
