@@ -4,120 +4,20 @@ title: Introduction
 description: My document description
 hide_table_of_contents: true
 ---
-import EyesIcon from '@site/static/img/applitools-eyes-icon.svg'
+import EyesIcon from '@site/static/img/apple-icon.png'
 import UFGIcon from '@site/static/img/applitools-ufg-icon.svg'
 import NMGIcon from '@site/static/img/applitools-nmg-icon.svg'
 import Link from '@docusaurus/Link'
-import useBaseUrl from '@docusaurus/useBaseUrl'
 import ThemedImage from '@theme/ThemedImage'
 import AngularLogo from '@site/static/img/libraries/angular-icon.svg'
 import SeleniumLogo from '@site/static/img/libraries/selenium-icon.svg'
 import CypressLogo from '@site/static/img/libraries/cypress-icon.svg'
 import PlaywrightLogo from '@site/static/img/libraries/playwright-icon.svg'
-import puppeteerLogo from '@site/static/img/libraries/puppeteer-icon.svg'
-const webframeworks = [
-  {
-    name: 'Selenium',
-    logo: SeleniumLogo,
-    href: '/tutorials/category/selenium',
-  },
-  {
-    name: 'Cypress',
-    logo: CypressLogo,
-    href: '/tutorials/quickstart/web/cypress',
-  },
-  {
-    name: 'Playwright',
-    logo: PlaywrightLogo,
-    href: '/tutorials/quickstart/web/playwright',
-  },
-  {
-    name: 'puppeteer',
-    logo: puppeteerLogo,
-    href: '/tutorials/quickstart/web/puppeteer',
-  },
-  {
-    name: 'WebdriverIO',
-    logo: AngularLogo,
-    href: '/tutorials/categiry/webdriverio',
-  },
-  {
-    name: 'Protractor',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/web/protractor',
-  },
-  {
-    name: 'Testcafe',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/web/testcafe',
-  },
-  {
-    name: 'Watir',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/web/watir',
-  },
-  {
-    name: 'Capybara',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/web/Capybara',
-  },
-  {
-    name: 'LeanFT',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/web/LeanFT',
-  }
-]
-const mobileframeworks = [
-  {
-    name: 'Appium',
-    logo: AngularLogo,
-    href: '/tutorials/category/appium',
-  },
-  {
-    name: 'Espresso',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/mobile/espresso',
-  },
-  {
-    name: 'Calabash',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/mobile/calabash',
-  },
-  {
-    name: 'XCUI',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/mobile/xcui',
-  },
-]
-const desktopframeworks = [
-  {
-    name: 'Windows Coded UI',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/desktop/windows-coded-UI',
-  },
-  {
-    name: 'Windows UFT',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/desktop/windows-uft',
-  },
-  {
-    name: 'Windows Apps',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/desktop/windows-apps',
-  },
-]
-const codeless = [
-  {
-    name: 'SeleniumIDE',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/codeless/selenium-ide',
-  },
-  {
-    name: 'UFT',
-    logo: AngularLogo,
-    href: '/tutorials/quickstart/codeless/uft',
-  },
-]
+import PuppeteerLogo from '@site/static/img/libraries/puppeteer-icon.svg'
+import WebFrameworks from '@site/src/components/webframeworks/index.tsx'
+import MobileFrameworks from '@site/src/components/mobileframeworks/index.tsx'
+import DesktopFrameworks from '@site/src/components/desktopframeworks/index.tsx'
+import Codeless from '@site/src/components/codeless/index.tsx'
 
 Applitools is a visual testing platform that uses Visual AI to validate the UI or Components of web and mobile applications. 
 
@@ -126,12 +26,12 @@ Applitools is a visual testing platform that uses Visual AI to validate the UI o
 
 The Applitools Test Cloud is made up of several distinct modules that can be used together.
 
- <div className="">
+<div className="">
   <div className="row">
      <div class="col col--6">
       <Link class="card" to="/tutorials/platform/applitools-eyes/overview">
         <div class="card__body">
-        <img src={EyesIcon} alt="Example banner" />
+        <img src={EyesIcon} style={{maxWidth:'50px'}}/>
             <h4>Eyes</h4>
             <p>The industry leading Visual AI engine.</p>
         </div>
@@ -140,7 +40,7 @@ The Applitools Test Cloud is made up of several distinct modules that can be use
     <div class="col col--6">
       <Link class="card" to="/tutorials/platform/applitools-ufg">
         <div class="card__body">
-          <img src={UFGIcon} alt="Example banner" />
+          <img src={EyesIcon} style={{maxWidth:'50px'}}/>
           <h4>Ultrafast Test Grid</h4>
           <p>A cloud-based testing grid for web and mobile browsers.</p>
         </div>
@@ -151,7 +51,7 @@ The Applitools Test Cloud is made up of several distinct modules that can be use
     <div class="col col--6">
       <Link class="card" to="/tutorials/platform/applitools-nmg">
         <div class="card__body">
-        <img src={NMGIcon} alt="Example banner" />
+        <img src={EyesIcon} style={{maxWidth:'50px'}}/>
           <h4>Native Mobile Grid</h4>
            <p>A cloud-based testing grid for Mobile Devices.</p>
         </div>
@@ -160,6 +60,7 @@ The Applitools Test Cloud is made up of several distinct modules that can be use
     <div class="col col--6">
       <Link class="card" to="/docs/guides/database">
         <div class="card__body">
+          <img src={EyesIcon} style={{maxWidth:'50px'}}/>
           <h4>Dashboard</h4>
           <p>All your testing results in one easy to analyze dashboard.</p>
         </div>
@@ -170,124 +71,21 @@ The Applitools Test Cloud is made up of several distinct modules that can be use
 
  ## Quickstart
 Choose your favorite framework or language and get started by adding the Applitools SDK.
+### Web 
 
-### Web SDKs
+<WebFrameworks />
 
-<div>
-  <div class="row is-multiline">
-    {webframeworks.map((x) => (
-      <div key={x.name} class="col col--3">
-        <Link class="card" to={x.href}>
-          <div class="card__body" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-            {x.logo && !x.themed ? (
-              <x.logo width="20" alt={x.name} style={{ display: 'block', maxHeight: 20 }} />
-            ) : (
-              <ThemedImage
-                style={{ display: 'block', maxHeight: 20 }}
-                alt={x.name}
-                width="20"
-                sources={{
-                  light: useBaseUrl(x.logo.light),
-                  dark: useBaseUrl(x.logo.dark),
-                }}
-              />
-            )}
-            <p>{x.name}</p>
-          </div>
-        </Link>
-      </div>
-    ))}
-  </div>
-</div>
+### Mobile 
 
+<MobileFrameworks />
 
+### Desktop 
 
-### Mobile SDKs
-<div>
-  <div class="row is-multiline">
-    {mobileframeworks.map((x) => (
-      <div key={x.name} class="col col--3">
-        <Link class="card" to={x.href}>
-          <div class="card__body" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-            {x.logo && !x.themed ? (
-              <x.logo width="20" alt={x.name} style={{ display: 'block', maxHeight: 20 }} />
-            ) : (
-              <ThemedImage
-                style={{ display: 'block', maxHeight: 20 }}
-                alt={x.name}
-                width="20"
-                sources={{
-                  light: useBaseUrl(x.logo.light),
-                  dark: useBaseUrl(x.logo.dark),
-                }}
-              />
-            )}
-            <p>{x.name}</p>
-          </div>
-        </Link>
-      </div>
-    ))}
-  </div>
-</div>
+<DesktopFrameworks />
 
+### Codeless 
 
-### Desktop SDKs
-<div>
-  <div class="row is-multiline">
-    {desktopframeworks.map((x) => (
-      <div key={x.name} class="col col--3">
-        <Link class="card" to={x.href}>
-          <div class="card__body" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-            {x.logo && !x.themed ? (
-              <x.logo width="20" alt={x.name} style={{ display: 'block', maxHeight: 20 }} />
-            ) : (
-              <ThemedImage
-                style={{ display: 'block', maxHeight: 20 }}
-                alt={x.name}
-                width="20"
-                sources={{
-                  light: useBaseUrl(x.logo.light),
-                  dark: useBaseUrl(x.logo.dark),
-                }}
-              />
-            )}
-            <p>{x.name}</p>
-          </div>
-        </Link>
-      </div>
-    ))}
-  </div>
-</div>
-
-
-### Codeless SDKs
-<div>
-  <div class="row is-multiline">
-    {codeless.map((x) => (
-      <div key={x.name} class="col col--3">
-        <Link class="card" to={x.href}>
-          <div class="card__body" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-            {x.logo && !x.themed ? (
-              <x.logo width="20" alt={x.name} style={{ display: 'block', maxHeight: 20 }} />
-            ) : (
-              <ThemedImage
-                style={{ display: 'block', maxHeight: 20 }}
-                alt={x.name}
-                width="20"
-                sources={{
-                  light: useBaseUrl(x.logo.light),
-                  dark: useBaseUrl(x.logo.dark),
-                }}
-              />
-            )}
-            <p>{x.name}</p>
-          </div>
-        </Link>
-      </div>
-    ))}
-  </div>
-</div>
-
+<Codeless />
 
 
 

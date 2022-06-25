@@ -2,8 +2,6 @@
 sidebar_position: 2
 ---
 
-
-
 # Analyzing Differences
 
 Applitools easily integrates with your existing tests – no need to create new tests or learn new frameworks. With a single snippet of code, Applitools Eyes captures and analyzes an entire screen of your application.

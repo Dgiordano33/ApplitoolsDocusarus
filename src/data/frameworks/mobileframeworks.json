@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Appium",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "shortDescription": "this is short",
+        "longDescription": "this is slightly longer",
+        "frameworkType" : "web",
+        "href" : "/tutorials/category/appium"
+    },
+    {
+        "name": "Espresso",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "href" : "/tutorials/quickstart/mobile/espresso"
+    },
+    {
+        "name": "Calabash",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "href" : "/tutorials/quickstart/mobile/cypress"
+    },
+    {
+        "name": "XCUI",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "href" : "/tutorials/quickstart/mobile/cypress"
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Selenium IDE",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "shortDescription": "this is short",
+        "longDescription": "this is slightly longer",
+        "frameworkType" : "web",
+        "href" : "/tutorials/category/selenium"
+    },
+    {
+        "name": "UFT",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "href" : "/tutorials/quickstart/web/cypress"
+    },
+    {
+        "name": "TestIM",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "href" : "/tutorials/quickstart/web/cypress"
+    }
+]
