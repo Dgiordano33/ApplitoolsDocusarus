@@ -2,7 +2,6 @@
 import React from 'react'
 import webframeworks from '@site/src/data/frameworks/webframeworks.json'
 import Link from '@docusaurus/Link'
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 
 export type Webframeworks ={

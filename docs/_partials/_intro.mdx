@@ -1,0 +1,96 @@
+
+import React from 'react'
+import cypressdata from '@site/src/data/frameworks/webframeworks.json'
+
+
+export default function Cypress () { 
+  return(
+    <div>
+      <div className="row is-multiline">
+        {cypressdata.map((cypressdata) => (
+          <div key={cypressdata.name}>
+        <span> This tutorial will show you how to automate visual tests using the Applitools Ultrafast Grid with  {cypressdata.name}</span>.
+
+                [Applitools Ultrafast Grid](https://applitools.com/platform/) can help you catch functional and visual problems at scale across all browsers and devices in seconds.
+
+                <span> The Applitools Eyes SDK for {cypressdata.name} </span> does *not* support the Classic runner, it supports only the Ultrafast Grid.
+
+                In this tutorial, you will:
+
+                1. Set up your local machine for testing.
+                2. Clone the example project repository.
+                3. Learn how to automate visual testing with Applitools Eyes.
+                4. Run the visual tests and review results in the Applitools dashboard.
+
+                After setting up your machine, this tutorial should take **about 15 minutes** to complete. 
+
+                If you get stuck along the way, please [reach out to us for help](https://help.applitools.com/hc/en-us/requests/new)!
+
+                :::tip Quickstart
+
+                If you prefer a quickstart instead of a full tutorial,
+                clone the [example repository]({cypressdata.exampleRepo})
+
+                and follow the [README]({cypressdata.exampleRepo}/blob/README.md) instructions!
+                :::   
+                                
+                ## Recognizing project structure
+
+                The example project uses:
+
+                * {cypressdata.language} as the programming language
+                * {cypressdata.automation} for browser automation
+                * {cypressdata.browser} as the local browser for testing
+                * {cypressdata.packageManager} for dependency management
+                * [Applitools Eyes](https://applitools.com/platform/eyes/) for visual testing
+                * [Applitools Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/) for cross-browser execution
+
+
+                ## Setting up your machine
+
+                You'll need a few things to run this tutorial:
+
+                1. An [Applitools account](https://auth.applitools.com/users/register),
+                which you can register for free.
+
+                2. [Node.js](https://nodejs.org/en/download/), version 12 or higher.
+
+                3. A good text editor or IDE like [Visual Studio Code](https://code.visualstudio.com/docs/languages/javascript).
+
+                4. Up-to-date versions of the following browsers:
+                * [Google Chrome](https://www.google.com/chrome/)
+                * [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/)
+                * [Microsoft Edge](https://www.microsoft.com/en-us/edge)
+
+
+                ## Downloading the example project
+
+                The example project is located at
+                [{cypressdata.exampleRepo}]({cypressdata.exampleRepo}).
+                Clone this repository to your local machine:
+
+                ```
+                $ git clone https://github.com/applitools/example-cypress-javascript-ufg.git
+                $ cd example-cypress-javascript-ufg
+                ```
+
+                *Note: If you don't have Git installed,
+                then instead of running `git clone`,
+                you can [download the project as a ZIP file](https://github.com/applitools/example-cypress-javascript-ufg/archive/refs/heads/master.zip)
+                and extract it.*
+
+
+                ## Understanding the dependencies
+
+                The example project uses [npm](https://www.npmjs.com/) for package management.
+                It contains the following dependencies for the 
+                [Applitools Eyes SDK for Cypress](https://www.npmjs.com/package/@applitools/eyes-cypress)
+                as well as Cypress itself:
+        </>
+                
+            </div>
+        ))}
+      </div>
+    </div>
+  )
+}

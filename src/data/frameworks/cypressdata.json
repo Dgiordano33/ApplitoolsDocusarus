@@ -1,0 +1,15 @@
+[
+    {
+        "name": "Cypress",
+        "logo": "/static/img/apple-icon.png",
+        "shortDescription": "this is short",
+        "longDescription": "this is slightly longer",
+        "href" : "/tutorials/category/selenium",
+        "frameworkType" : "web",
+        "packageManager" : "npm",
+        "language" : "JavaScript",
+        "automation" : "Cypress",
+        "browser": "Google Chrome",
+        "exampleRepo" : "https://github.com/applitools/example-selenium-javascript"
+    }
+]

@@ -4,13 +4,24 @@
         "logo": "/static/img/apple-icon.png",
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
+        "href" : "/tutorials/category/selenium",
         "frameworkType" : "web",
-        "href" : "/tutorials/category/selenium"
+        "packageManager" : "npm",
+        "language" : "JavaScript",
+        "automation" : "Selenium",
+        "browser": "Google Chrome",
+        "exampleRepo" : "https://github.com/applitools/example-selenium-javascript"
     },
     {
         "name": "Cypress",
         "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
-        "href" : "/tutorials/quickstart/web/cypress"
+        "href" : "/tutorials/quickstart/web/cypress",
+        "frameworkType" : "web",
+        "packageManager" : "npm",
+        "language" : "JavaScript",
+        "automation" : "Cypress",
+        "browser": "Google Chrome",
+        "exampleRepo" : "https://github.com/applitools/example-cypress-javascript-ufg"
     },
     {
         "name": "Playwright",
