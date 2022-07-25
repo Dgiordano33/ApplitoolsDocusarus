@@ -1,0 +1,130 @@
+---
+sidebar_position: 2
+title: Screenshot C#
+---
+
+
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+## Running Tests with Applitools
+
+### Prerequisites
+
+1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+
+  :::tip Tip: Unsure how to set up your API key?
+  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
+  :::
+
+
+2. Set the `APPLITOOLS_API_KEY` environment variable 
+
+    - Mac: `export APPLITOOLS_API_KEY='YOUR_API_KEY'`
+
+    - Windows: `set APPLITOOLS_API_KEY='YOUR_API_KEY'`
+
+    ::: tip
+    1. You may skip this step if you want to hard code the API KEY inside the tutorial project's code.
+    2. It's better to store APPLITOOLS_API_KEY in the system variables (in Windows) or in the `~/.bash_profile` (in Mac) so that it is accessible from all Terminal shells
+    :::
+
+3. Install Visual Studio from [here](https://visualstudio.microsoft.com/downloads/) 
+
+4. Install git from [https://git-scm.com​](https://git-scm.com)
+
+    :::tip
+    Installing `git` is optional. You need this mainly to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repo. Further, If you are using Mac OSX, you already have `git`.
+    ::: 
+
+## 🚀 - Run the existing demo app 
+
+1. Get the code:
+    * Option 1: `git clone https://github.com/applitools/tutorial-images-csharp-basic`
+    * Option 2: Download it as a [Zip file](https://github.com/applitools/tutorial-images-csharp-basic/archive/master.zip) and unzip it.
+2. Import the project into Visual Studio:
+    * Open Visual Studio from the **command line** by running something similar to: `open /Applications/Visual\ Studio.app/` rather than double-clicking on it. **This approach will load all the environment variables such as APPLITOOLS_API_KEY from the command line shell**.
+
+:::warning Note
+Do not open Visual Studio by double clicking it as it will not load environment variables. If you already have it open, please close it and open it from the Command line.
+:::
+
+3. In Visual Studio, open the `ApplitoolsTutorial` by navigating to the downloaded project via `File > open` and select the **`ApplitoolsTutorials.sln`** file.
+
+4. Update SDK and Dependencies:
+	<ol type="a">
+		<li>Right click the Dependencies folder in Visual Studio</li>
+		<li>Select Update</li>
+	</ol>
+
+5. Hit Run button in Visual Studio to run the code
+
+## 5.2 🤓 - Add Applitools to an existing project
+
+1. Include the SDK as a Nuget Package
+	* In Visual Studio select Project > Manage Nuget Packages
+	* Search for Eyes.Images and select the package
+	* Click "Add Package"
+
+### Example Test
+```csharp
+using Applitools.Images;
+using NUnit.Framework;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Net;
+
+namespace ApplitoolsTutorial
+{
+
+    [TestFixture]
+    public class BasicDemo
+    {
+        private Eyes eyes;
+
+        [Test]
+        public void BasicTest()
+        {
+            // Initialize the eyes SDK and set your private API key.
+            eyes = new Eyes();
+           
+            // Start the session and set app name and test name.
+            eyes.Open("Applitools site", "Screenshot test!");
+
+            // Load page image and validate.
+            Bitmap bitmap = GetImage(new Uri("https://applitools.com/blog/wp-content/uploads/2013/11/app-is-live-nov-2013.png"));
+
+            // Visual checkpoint.
+            eyes.CheckImage(bitmap);
+
+            // End the test.
+            eyes.Close();
+        }
+
+        [TearDown]
+        public void AfterEach()
+        {
+            eyes.AbortIfNotClosed();
+        }
+
+        static Bitmap GetImage(Uri uri)
+        {
+            var request = WebRequest.Create(uri);
+            using (var response = request.GetResponse())
+            using (var responseStream = response.GetResponseStream())
+            {
+                var imageStream = new MemoryStream();
+                responseStream.CopyTo(imageStream);
+                imageStream.Position = 0;
+
+                return new Bitmap(imageStream);
+            }
+        }
+    }
+}
+```

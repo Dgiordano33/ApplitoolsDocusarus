@@ -1,0 +1,129 @@
+---
+sidebar_position: 4
+title: Screenshot JavaScript
+---
+
+
+
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+## Running Tests with Applitools
+
+### Prerequisites
+
+1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+
+  :::tip Tip: Unsure how to set up your API key?
+  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
+  :::
+
+2. Node.js <https://nodejs.org>
+
+3. Git <https://git-scm.com>
+
+  :::tip Note: Installing `git` is optional
+  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
+  :::
+
+
+
+### Running the Example Project
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-images-javascript.git
+cd tutorial-images-javascript
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Install the dependencies
+```
+npm install
+```
+
+3. Run the example test
+
+To run all of the tests, run:
+
+```
+APPLITOOLS_API_KEY="[Your API Key]" npm test
+```
+
+### Adding Applitools Eyes to an Existing Node.js Project
+
+Install Applitools Eyes dependencies:
+
+```sh
+npm install @applitools/eyes-images --save-dev
+```
+
+### Sample test
+
+```js
+'use strict'
+
+const {Eyes, Target, Configuration, BatchInfo} = require('@applitools/eyes-images')
+const fetch = require('node-fetch')
+const path = require('path')
+
+describe('Eyes-Images', () => {
+    let eyes 
+
+    beforeEach(() => {
+        eyes = new Eyes()
+
+        // Initialize the eyes configuration
+        const configuration = new Configuration();
+
+        // You can get your api key from the Applitools dashboard
+        // configuration.setApiKey('APPLITOOLS_API_KEY')
+
+        // Set new batch
+        configuration.setBatch(new BatchInfo('Demo batch'))
+
+        // Set the configuration to eyes
+        eyes.setConfiguration(configuration);
+    })
+
+    it('Images test', async () => {
+        await eyes.open('Applitools site', 'Screenshot test!', {width: 800, height: 600})
+
+        await eyes.check('URL', Target.image('https://i.ibb.co/bJgzfb3/applitools.png'))
+        
+        const imageBuffer = await fetch('https://i.ibb.co/bJgzfb3/applitools.png').then(resp => resp.buffer())
+        await eyes.check('Buffer', Target.image(imageBuffer))
+
+        await eyes.check('file path', Target.image(path.resolve(__dirname, 'applitools.png')))
+
+        await eyes.check('base 64 string', Target.image(imageBuffer.toString('base64')))
+
+        await eyes.close()
+    })
+    
+    afterEach(async () => {
+        await eyes.abortIfNotClosed();
+    })
+})
+```
+
+Download the following image and place it next your test file:
+
+  ::: tip Note: Image Location
+  The test example currently expects the image to be placed next to it. If you prefer it to
+  be in another location, be sure to update the location in the test.
+  :::
+
+## Applitools Eyes JavaScript Images SDK
+
+### How it works
+
+The Applitools Eyes Screenshot Javascript SDK allows you to easily add visual checkpoints to your Javascript images tests. It takes care of images given by the user, sending them to the Eyes server for validation and failing the test in case differences are found.
+
+### More information
+
+The `@applitools/eyes-images` npm package page contain more information. Visit [eyes-images SDK repo](https://www.npmjs.com/package/@applitools/eyes-images) to find out more about what's possible with Applitools' JavaScript Images SDK.

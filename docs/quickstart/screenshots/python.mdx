@@ -1,0 +1,94 @@
+---
+sidebar_position: 5
+title: Screenshot Python
+---
+
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+## Running Tests with Applitools
+
+### Prerequisites
+
+1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+
+  :::tip Tip: Unsure how to set up your API key?
+  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
+  :::
+
+
+2. Python 3 <https://realpython.com/installing-python/>
+3. Git <https://git-scm.com>
+
+  :::tip Note: Installing `git` is optional
+  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
+  :::
+
+### Running the Example Project
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-images-python.git
+cd tutorial-images-python
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Install the dependencies
+```
+pip3 install -r requirements.txt
+```
+
+3. Run the example test
+```
+APPLITOOLS_API_KEY="[Your API Key]" pytest tutorial.py
+```
+
+### Adding Applitools Eyes to an Existing Project
+
+Install Applitools Eyes dependencies:
+
+```sh
+pip install eyes-images
+```
+
+### Sample test
+
+```python
+import os
+import io
+import pytest
+import requests
+from PIL import Image
+
+from applitools.images import Eyes, BatchInfo, logger
+
+logger.set_logger(logger.StdoutLogger())
+
+@pytest.fixture(name="eyes", scope="function")
+def eyes_setup():
+    """
+    Basic Eyes setup. It'll abort test if wasn't closed properly.
+    """
+    eyes = Eyes()
+    eyes.configure.batch = BatchInfo("Demo Batch - Images - Python")
+    yield eyes
+    # If the test was aborted before eyes.close was called, ends the test as aborted.
+    eyes.abort()
+
+
+def test_tutorial(eyes):
+    # Start the session and set app name and test name.
+    eyes.open("Demo App - Images Python", "Smoke Test - Images Python")
+
+    image = Image.open(io.BytesIO(requests.get("https://i.ibb.co/bJgzfb3/applitools.png").content))
+    
+    # Visual checkpoint #1.
+    eyes.check_image(image)
+
+    # End the test.
+    eyes.close(False)
+```

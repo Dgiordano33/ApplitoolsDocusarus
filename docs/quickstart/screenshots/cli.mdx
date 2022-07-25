@@ -1,0 +1,127 @@
+---
+sidebar_position: 1
+title: CLI Tutorial
+---
+The Applitools CLI Tool allows you to easily run visual UI tests on a collection of image files, by placing them inside a directory (also works with nested directory structure). It runs as a standalone jar file and can be invoked as a process by any programming language.
+
+## Steps for running tests
+
+1.    Download the latest `ImageTester.jar` file from here: [https://github.com/applitools/ImageTester](https://github.com/applitools/ImageTester)
+
+:::tip Note
+If you don't have your Applitools account yet, please [sign up first](https://applitools.com/users/register) and get your Applitools `API Key` that will be used next to execute the tests.
+
+You can get the `API Key` by clicking on the Person Icon | "My API Key"
+:::
+
+
+2.    Add your `API Key` as an environment variable (optional, but recommended).
+
+3.    Create a folder which will contain the images under test (let's say `/under_test`).
+
+4.    Copy one batch of images into the `/under_test` folder
+
+5.    Run the `ImageTester.jar` jar file as shown below:
+
+```sh
+java -jar ImageTester.jar -k $APPLITOOLS_API_KEY -f <PATH_TO>/under_test/
+```
+
+:::tip Note
+The $APPLITOOLS_API_KEY is the environment variable name which contains the API key. You can instead just use **-k &lt;PASTE YOUR KEY&gt;**
+:::
+
+6.    This will create your baseline for the test.
+
+7.    Copy the second images batch into the `under_test` folder.
+
+8.    Run the `ImageTester` jar file (same as in #5)
+
+9.    This will now create a checkpoint and compare against the baseline that was set in #5
+
+10. Navigate to your dashboard to see the test results.
+
+## Advanced options
+The tool can be invoked on a single file or a complex folder structure with mixed content. The tool is built in Java and requires minimal set of parameters the minimal command will look as follow:
+
+```bash
+java -jar ImageTester.jar -k [api-key]
+```
+
+
+:::tip Note
+ In the above, we are assuming that the images are in the same folder. If not, use `-f` to point to the target folder or file.
+:::
+
+\* In the minimal set of parameters will assume that the search folder is the execution folder.
+
++ Required parameters:
+    + `-k [api-key]` - Applitools api key
++ Optional parameters and flags:
+    + `-f [path]` - A path to target folder or file
+    + `-a [app-name]` - Set the application name under directoryTest; default = ImageTester
+    + `-p [http://proxy{,user,pass}]` - Set proxy and optional username + password
+    + `-s [server]` - Set Applitools server url
+    + `-ml [match-level]` - Set the comparison level, one from Strict/Content/Layout; Default = Strict
+    + `-br [branch]` - Set the branch
+    + `-pb [parent-branch]` - Set the parent branch
+    + `-bn [baseline]` - Set custom baseline name
+    + `-vs [WidthxHeight]` - Set the viewport size identifier
+    + `-lf [log-file]` - Set log fine name to enable logging
+    + `-os [osname]` - Set custom os
+    + `-ap [browser name]` - Set browser or equivalent hosting application name
+    + `-th [number]` - Specify max. concurrent workers (Threads). default= 3
+    + `-fn [testName]` - Force all test names to be specific name. This will force all tests to be matched with a single baseline.
+    + `-fb [batchName]` - Set unified flat batch to contain all the discovered tests regardless their hierarchy.
+      + To add batch id to the flat batch use the following syntax:`-fb BATCH_NAME<>BATCH_ID`
+    + `-sq [sequenceName]` - Set batch sequenceName for unified insights in applitools' dashboard.
+    + `-ms [matchsize]` - Match the size of the images to a specific width and/or height ie. `1000x`- adjust by width, `x600`-adjust by height, `1000x600`- fit to the exact size (note, if both provided, may loose proportions)
+    + `-nc` - Send batch notification on complete.
+    + `-as` - Set automatic save on failures
+    + `-st` - Split steps to individual tests
+    + `-id` - Ignore displacement of shifting elements.
+    + `-pn` - Prompt new tests, new tests will not be saved automatically, the user will have to review and save manually.
+    + `-dv` - Disable SSL certificate validation. !!!Unsecured!!!
+
+
+    ###### For Documents (PDFs) only
+    + `-di [dpi]` - Set the quality of the conversion on PDF files
+    + `-sp [pages]` - Comma separated page numbers\range to include in PDF testing (ie: 1,2,5,7,10-15); Default all included
+    + `-pp [password]` - The password if the PDF files protected
+    + `-pn` - Preserve original directory test names when specifying pages
+
+## Enterprise features in combination with [Eyes Utilities](https://github.com/applitools/EyesUtilities)
+By placing the Eyes-Utilities jar into the same folder as the ImageTester, new enterprise api features
+made possible by providing an enterprise read-key.
+
+```bash
+java -jar ImageTester.jar -k [api-key] -vk [view-key] [options]
+```
+
++ Required parameters:
+    + `-k [api-key]` - Applitools api key
+    + `-vk [view-key]` - Applitools enterprise view-key
++ Selective flags - Required one or more
+    + `-gd` - Get diff images of the failed steps
+    + `-gi` - Get images of the failed steps
+    + `-gg` - Get animated gifs of the failed steps
++ Optional parameters and flags:
+    + `-of [path]` - Specify custom output path or path-template
+
+## Supporting regions
+To validate only a specific regions of a particular image the folder must contain .regions file with the same name as the image.
+ie. If my image file is 'step1.png' then the regions file should be 'step1.regions'.
+Internally the format should be 4 columns csv in the following order: left,top,width,height
+
+Here is an example of what can be step1.regions:
+```
+0,0,100,200
+500,100,240,123
+```
+In order to include a capture of the entire image too, add an empty line as part of the regions list.
+
+
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.

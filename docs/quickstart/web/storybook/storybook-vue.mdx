@@ -1,0 +1,85 @@
+---
+sidebar_position: 2
+title: Storybook Vue
+---
+
+## Getting Started with Applitools
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+## Running Tests with Applitools
+### Prerequisites
+
+1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+
+  :::tip Tip: Unsure how to set up your API key?
+  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
+  :::
+
+2. Node.js <https://nodejs.org>
+
+3. Git <https://git-scm.com>
+
+  :::tip Note: Installing `git` is optional
+  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
+  :::
+
+
+### Running the Example Project
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-storybook-vue.git
+cd tutorial-storybook-vue
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Install the dependencies
+```
+npm install
+```
+
+3. Run the example test
+```
+APPLITOOLS_API_KEY="[Your API Key]" npx eyes-storybook
+```
+
+This will first set your `APPLITOOLS_API_KEY` into the node process then run `npx eyes-storybook`.
+
+:::tip
+`npx` comes as part of Node.js installation. It automatically runs the `eyes-storybook` executable.
+:::
+
+You should see that it takes about 10 seconds to startup and complete all the tests.
+
+
+You should see the results of all the components in seconds.
+
+
+
+### Adding Applitools Eyes to an Existing Node.js Storybook Project
+
+Install Applitools Eyes dependencies:
+
+```sh
+npm install --save-dev @applitools/eyes-storybook
+```
+
+## Applitools Eyes Storybook SDK
+
+### How it works
+
+The Applitools Eyes Storybook SDK does not require you to change any code! You simply need to add Applitools SDK as a dependency and run the CLI command!
+
+Our SDK simply opens up different stories from your project and upload the DOM to our Visual grid servers. It uploads multiple DOMs concurrently. The visual grid receives these DOMs and renders them in parallel using real browsers. Then it take pictures of each stories. And finally, these pictures are then sent to our AI servers to check for differences.
+
+The picture below shows how it works
+
+
+### More information
+
+The `@applitools/eyes-storybook` npm package page contain more information about advanced configuration, best practices and troubleshooting. Visit [eyes-storybook SDK repo](https://www.npmjs.com/package/@applitools/eyes-storybook) to find out more about what's possible with Applitools' Storybook SDK.

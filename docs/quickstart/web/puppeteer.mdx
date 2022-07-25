@@ -1,204 +1,147 @@
 ---
 sidebar_position: 4
-title: puppeteer
+title: Puppeteer
 ---
 
-# Cypress Tutorial
+## Getting Started with Applitools Eyes & Puppeteer
 
-## Getting Started with Applitools
+### Adding Applitools Eyes to a Puppeteer test
 
-Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+1. Install Applitools Eyes for Puppeteer
 
-* [🤖 How it Works](/overview/how-it-works.html)
-* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
-* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+In order to use Applitools Eyes, we need to first install the Eyes SDK for Puppeteer as an npm package.
 
-## Running Tests with Applitools
-
-## Prerequisites
-
-1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
-
-  ::: tip Tip: Unsure how to set up your API key?
-  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
-  :::
-
-2. Node.js <https://nodejs.org>
-
-3. Git <https://git-scm.com>
-
-  ::: tip Note: Installing `git` is optional
-  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
-  :::
-
-4. Google Chrome Browser <https://www.google.com/chrome/>
-
-
-### Running the Example Project
-
-1. Clone or download the repository and navigate to that folder
-```
-git clone https://github.com/applitools/tutorial-cypress.git
-cd tutorial-cypress
-```
-*Note: you can alternatively download the project as a Zip file and extract it*
-
-2. Install the dependencies
-```
-npm install
+```bash
+npm i -D @applitools/eyes-puppeteer
 ```
 
-3. Set up Applitools Eyes
-```
-npx eyes-setup
-```
+2. Add a new visual test with Applitools Eyes
 
-4. Run the example test
+To run a new check with Applitools Eyes, you can add the following to a test.
 
-To run all of the tests in interactive mode, run:
-
-```
-APPLITOOLS_API_KEY="[Your API Key]" npm run cypress:open
-```
-
-::: tip Running your tests on Windows?
-Before running the command with npm, add the `APPLITOOLS_API_KEY` variable to your environment with:
-```
-set APPLITOOLS_API_KEY='YOUR_API_KEY'
-```
-:::
-
-Then click on the `ultraFastGrid.spec.js` test. The tests uses Chrome just once and sends the DOM snapshot to the Ultrafast Grid. The Grid will then render the DOM snapshot in the cloud. You need to wait 15-30 seconds.
-
-To run all of the tests inside of the terminal, run:
-
-```
-APPLITOOLS_API_KEY="[Your API Key]" npm test
-```
-
-  ::: tip
-  The project additionally has a CI mode configured,
-  which will run all of the tests inside of the terminal
-  in headless mode. You can run this with: `npm run test:ci`
-  :::
-
-
-### Adding Applitools Eyes to an Existing Node.js Cypress Project
-
-Install Applitools Eyes dependencies:
-
-```sh
-npm install @applitools/eyes-cypress --save-dev
-```
-
-### Sample test
+First import the Eyes SDK dependencies:
 
 ```js
-describe("AppTest", () => {
-
-    it(`ultraFastTest`, function () {
-        // Navigate to the url we want to test
-        // ⭐️ Note to see visual bugs, run the test using the above URL for the 1st run.
-        // but then change the above URL to https://demo.applitools.com/index_v2.html
-        // (for the 2nd run)
-        cy.visit('https://demo.applitools.com');
-
-        // Call Open on eyes to initialize a test session
-        cy.eyesOpen({
-            appName: 'Demo App',
-            testName: 'Ultrafast grid demo',
-        })
-
-        // check the login page with fluent api, see more info here
-        // https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
-        cy.eyesCheckWindow({
-            tag: "Login Window",
-            target: 'window',
-            fully: true
-        });
-
-        cy.get('#log-in').click()
-
-        // Check the app page
-        cy.eyesCheckWindow({
-            tag: "App Window",
-            target: 'window',
-            fully: true
-        });
-
-        // Call Close on eyes to let the server know it should display the results
-        cy.eyesClose()
-    });
-
-});
+const { Eyes, ClassicRunner, Target } = require('@applitools/eyes-puppeteer')
 ```
 
-Add `applitools.config.js` to the root of your project with: 
+Next create a new runner and Eyes instance to set up the test:
 
 ```js
-module.exports = {
-    testConcurrency: 1,
-    apiKey: 'APPLITOOLS_API_KEY',
-    browser: [
-        // Add browsers with different viewports
-        {width: 800, height: 600, name: 'chrome'},
-        {width: 700, height: 500, name: 'firefox'},
-        {width: 1600, height: 1200, name: 'ie11'},
-        {width: 1024, height: 768, name: 'edgechromium'},
-        {width: 800, height: 600, name: 'safari'},
-        // Add mobile emulation devices in Portrait mode
-        {deviceName: 'iPhone X', screenOrientation: 'portrait'},
-        {deviceName: 'Pixel 2', screenOrientation: 'portrait'}
-    ],
-    // set batch name to the configuration
-    batchName: 'Ultrafast Batch'
-}
+const runner = new ClassicRunner();
+const eyes = new Eyes();
 ```
 
-### Optional - Capture Test Results
-Use the below API to interact with the test results from your test. This API should be called after your call to `cy.eyesClose`:
+Then add a new check with Eyes:
 
 ```js
-after(() => {
-  cy.eyesGetAllTestResults().then(summary => {
-    console.log(summary)
-  })
-})
+await eyes.open(page, 'Hello World!', 'My first JavaScript test!', { width: 800, height: 600 });
+await eyes.check(Target.window().fully());
+await eyes.close();
 ```
 
-## Applitools Eyes Cypress SDK
+At it's simplest, this will tell Eyes that you want to start a test, capture the active window, and finally close the test.
 
-### How it works
+You can also create multiple checks that make sense in a typical user flow. If you have a login page where you want to be sure your authentication is working exactly as expected, you may write a test like:
 
-The Applitools Eyes Cypress SDK is a simple plugin to Cypress. Once installed, it adds few commands to the main `cy` object. Specifically, it adds three main methods, `cy.eyesOpen` to start the test, `cy.eyesCheckWindow` to take screenshots (for each test step) and `cy.eyesClose` to close the test.
+```js
+await eyes.open(page, 'Hello World!', 'My first JavaScript test!', { width: 800, height: 600 });
+await eyes.check('Login Page', Target.window().fully());
+await page.click('#log-in');
+await eyes.check('Dashboard', Target.window().fully());
+await eyes.close();
+```
 
-::: tip Note: Supports Chrome, Firefox and Mobile simulators
-The interesting thing is that even though you run your Cypress tests using Chrome browser, you can still add visual validations using both Chrome and Firefox! This is because we upload the DOM and assets to our Visual Grid that was rendered in Chrome and open it in Firefox or Chrome as per the settings. The same thing happens in mobile simulators as well.
-:::
+3. Set your Applitools API key
 
+Before running your test, you need to make your API key available to the environment. You can do this by either prepending your test command or exporting it in your terminal session.
 
-The picture below shows how it works
+To prepend, run a command like `npm test` as:
 
-1. You run the Cypress test as usual
+```bash
+APPLITOOLS_API_KEY="[Your Key]" npm test
+```
 
-2. Everytime you call `cy.eyesCheckWindow`, the SDK grabs the DOM and other assets asynchronously. And stores it locally until all the tests are done.
+To export your API key on a Mac, run:
 
-3. Once all the Cypress tests are done, the SDK uploads all the assets to the Visual Grid server
+```bash
+export APPLITOOLS_API_KEY="[Your Key]"
+```
 
-4. The Visual Grid server then opens up the assets in real browsers (Firefox or Chrome), or in mobile simulators, and with appropriate Viewport depending on what was set in the tests. Note that all these happen concurrently in the cloud.
+To export your API key on Windows, run:
 
-5. As and when the rendering happens, the Applitools Eyes server gets notification about it and the eyes server then compares the pictures using AI and advanced algorithms and shows the results.
+```bash
+set APPLITOOLS_API_KEY="[Your Key]"
+```
+
+*[Learn how to find your API key](/getting-started/setting-up-your-environment.html#finding-your-api-key)*
+
+5. Run your Puppeteer tests!
+
+Now you're ready to run your tests!
+
+You can use your existing test command to run your Puppeteer tests.
+
+And that's it! Your tests should now be available to review in the Applitools dashboard.
+
+### Running tests with the Applitools Ultrafast Grid
+
+The Ultrafast Grid gives you the power to run tests on a variety of browsers all from a single test!
+
+To do this, the core difference will start from the runner that we use to configure our Eyes instance.
+
+1. Update the imported dependencies
+
+First we need to update our dependencies to import the VisualGridRunner along with other modules that will be used to configure out browsers.
+
+```js
+const { Eyes, VisualGridRunner, Target, BrowserType, DeviceName } = require('@applitools/eyes-puppeteer');
+```
+
+2. Replace the runner with the VisualGridRunner
+
+In the previous steps, we used the ClassicRunner to run our tests. For the Ultrafast Grid, we need to use the VisualGridRunner.
+
+Replace the runner with the following:
+
+```js
+const runner = new VisualGridRunner({ testConcurrency: 5 });
+```
+
+3. Add browser configurations
+
+The last step needed is to add any browser configurations to ensure we're running our tests on multiple devices.
+
+Add the following before running `eyes.open`:
+
+```js
+const configuration = eyes.getConfiguration();
+
+configuration.addBrowser({ width: 1200, height: 800, name: BrowserType.CHROME });
+configuration.addBrowser({ width: 1200, height: 800, name: BrowserType.FIREFOX });
+configuration.addBrowser({ width: 1200, height: 800, name: BrowserType.SAFARI });
+configuration.addBrowser({ width: 1200, height: 800, name: BrowserType.EDGE_CHROMIUM });
+configuration.addBrowser({ width: 1200, height: 800, name: BrowserType.IE_11 });
+configuration.addBrowser({ deviceName: DeviceName.Pixel_2 });
+configuration.addBrowser({ deviceName: DeviceName.iPhone_X });
+
+eyes.setConfiguration(configuration);
+```
+
+4. Run your Puppeteer tests!
+
+You can use the same command to run your tests as you did before, just remember to set your API key.
+
+## Puppeteer Applitools Eyes SDK
+
+### Check out a working demo
+
+See it in action with our example [over on GitHub](https://github.com/applitools/tutorial-puppeteer)!
+
+<a href="https://github.com/applitools/tutorial-puppeteer">
+https://github.com/applitools/tutorial-puppeteer
+</a>
 
 ### More information
 
-The `@applitools/eyes-cypress` npm package page contain more information about advanced configuration, best practices and troubleshooting. Visit [eyes-cypress SDK repo](https://www.npmjs.com/package/@applitools/eyes-cypress) to find out more about what's possible with Applitools' Cypress SDK.
-
-## Resources
-
-- [Troubleshooting Common Issues](/getting-started/common-issues.html)
-- [Reference documentation](https://applitools.com/docs)
-- [Request a demo](https://applitools.com/request-demo?utm_source=tutorials)
-- [Knowledge base](https://help.applitools.com/hc/en-us/)
-- [File a Ticket](https://help.applitools.com/hc/en-us/requests/new).
-
-
+The `@applitools/eyes-puppeteer` npm package page contain more information about advanced configuration, best practices and troubleshooting. Visit [eyes-puppeteer SDK repo](https://www.npmjs.com/package/@applitools/eyes-puppeteer) to find out more about what's possible with Applitools' Puppeteer SDK.

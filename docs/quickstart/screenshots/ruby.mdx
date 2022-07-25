@@ -1,0 +1,94 @@
+---
+sidebar_position: 7
+title: Screenshot Ruby
+---
+
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+## Running Tests with Applitools
+
+### Prerequisites
+
+1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+
+  :::tip Tip: Unsure how to set up your API key?
+  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
+  :::
+
+2. Ruby <https://www.ruby-lang.org/en/documentation/installation/>
+
+3. Git <https://git-scm.com>
+
+  :::tip Note: Installing `git` is optional
+  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
+  :::
+
+
+
+
+### Running the Example Project
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-ruby-screenshots.git
+cd tutorial-ruby-screenshots
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Install the dependencies
+```
+gem install bundler && bundle install
+```
+
+3. Run the example test
+```
+APPLITOOLS_API_KEY="[Your API Key]" bundle exec ruby simple_test_script.rb
+```
+
+### Adding Applitools Eyes to an Existing Project
+
+Install Applitools Eyes dependencies:
+
+```sh
+gem install eyes_images
+```
+
+### Sample test
+
+```ruby
+require 'eyes_images'
+
+runner = Applitools::ClassicRunner.new
+eyes = Applitools::Images::Eyes.new(runner: runner)
+batch = Applitools::BatchInfo.new('Demo Batch - Images - Ruby')
+
+eyes.batch = batch
+
+Applitools::EyesLogger.log_handler = Logger.new(STDOUT).tap do |l|
+  l.level = Logger::INFO
+end
+
+begin
+  file_path = './applitools.png'
+  image_bytes = File.read(file_path)
+  image = Applitools::Screenshot.from_datastream(image_bytes)
+
+  eyes.open(app_name: 'Demo App - Images Ruby', test_name: 'Smoke Test - Images Ruby')
+  
+  eyes.check('By file path', Applitools::Images::Target.path(file_path))
+  eyes.check('By image bytes', Applitools::Images::Target.blob(image_bytes))
+  eyes.check('By Applitools Screenshot', Applitools::Images::Target.screenshot(image))
+
+  eyes.close
+rescue => e
+  puts e.message
+  eyes.abort
+ensure
+  puts runner.get_all_test_results
+end
+```

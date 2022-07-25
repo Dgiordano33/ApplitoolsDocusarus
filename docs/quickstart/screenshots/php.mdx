@@ -1,0 +1,102 @@
+---
+sidebar_position: 6
+title: Screenshot PHP
+---
+
+
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+
+## Install the SDK
+
+```php
+composer require applitools/eyes.sdk.php
+```
+
+If you don't have any installed packages create composer.json file:
+
+```php
+{
+    "require": {
+        "applitools/eyes.sdk.php": "^1.2.6"
+    }
+}
+```
+
+And then run:
+```
+composer install
+```
+
+## Run your first test
+Applitools Eyes reports differences by comparing screenshots of your application with baseline images that define the expected appearance of the application at each step of the test. By default, the Eyes SDK detects the environment in which the application is running (namely, the operating system, the type of browser and its viewport size) and compares the screenshots against baseline images that are specific to that environment. The first time you run a test in a given environment, its screenshots will be automatically saved as its baseline. Starting from the second run onward, you always have a baseline to compare against.
+
+The test below is a simple Php program that visually validates the Hello World web-page at https://applitools.com/helloworld. It consists of two visual checkpoints, each validating the entire application window. The first time you run this test a new baseline will be created, and subsequent test runs will be compared to this baseline. If any screenshot mismatch its baseline image in a perceptible way, `$eyes.close()` will throw a `DiffsFoundException` which includes a URL that points to a detailed report where you can see the detected differences and take appropriate actions such as reporting bugs, updating the baseline and more.
+
+Before running the test, make sure to set the API key that identifies your account in the environment variable `APPLITOOLS_API_KEY` or directly assign it to the `$eyes->setApiKey()` method. You can find your API key under the user menu located at the right hand side of the test manager toolbar. If you don't yet have an account [create it now](https://applitools.com/sign-up) to obtain your key.
+
+``` php
+<?php
+
+require_once('vendor/autoload.php');
+
+use Applitools\Images\Eyes;
+use Applitools\RectangleSize;
+use Applitools\PrintLogHandler;
+
+
+class HelloWorld
+{
+    public function demo()
+    {
+
+        // Initialize the eyes SDK and set your private API key.
+        $eyes = new Eyes();
+        $eyes->setApiKey('YOUR_API_KEY');
+        $eyes->setLogHandler(new PrintLogHandler(true));
+
+        try {
+
+            $appName = 'Hello World!';
+            $testName = 'PHP Screenshot test!';
+
+            // Start the test with a viewport size of 800x600.
+            $eyes->open($appName, $testName, new RectangleSize(800, 600));
+
+            // Load page image and validate.
+            $imgPath = __DIR__ . '/applitools.jpg';
+
+            // Download an image.
+            copy('https://applitools.com/blog/wp-content/uploads/2013/11/app-is-live-nov-2013.png', $imgPath);
+
+            // Visual validation.
+            $eyes->checkImage($imgPath, "Applitools image");
+
+            // End the test.
+            $eyes->close();
+
+        } finally {
+
+            // If the test was aborted before eyes->close was called,
+            // ends the test as aborted.
+            $eyes->abortIfNotClosed();
+
+        }
+    }
+}
+
+$test = new HelloWorld();
+$test->demo();
+
+```
+
+
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.

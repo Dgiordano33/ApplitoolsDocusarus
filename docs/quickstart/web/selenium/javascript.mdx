@@ -1,0 +1,270 @@
+---
+sidebar_position: 2
+title: JavaScript
+---
+
+## Getting Started with Applitools
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+## Running Tests with Applitools
+
+### Prerequisites
+
+1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+
+  :::tip Tip: Unsure how to set up your API key?
+  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
+  :::
+
+2. Node.js <https://nodejs.org>
+
+3. Git <https://git-scm.com>
+
+  :::tip Note: Installing `git` is optional
+  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
+  :::
+
+4. Google Chrome Browser <https://www.google.com/chrome/>
+
+5. ChromeDriver <https://chromedriver.chromium.org/getting-started>
+
+  :::tip ChromeDriver must be installed and in your `PATH`
+  Below are some resources from the internet that'll help you
+  
+  * [Install on Mac](https://www.kenst.com/2015/03/installing-chromedriver-on-mac-osx/)
+  * [Install on windows](https://www.youtube.com/watch?v=dz59GsdvUF8)
+
+  On Mac, place the `chromedriver` executable in `/usr/local/bin` folder so Eclipse and IntelliJ can find it.
+  :::
+
+## Option 1 - Run With The Ultrafast Grid
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-selenium-javascript-ultrafastgrid.git
+cd tutorial-selenium-javascript-ultrafastgrid
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Install the dependencies
+```
+npm install
+```
+
+3. Run the example test
+```
+APPLITOOLS_API_KEY="[Your API Key]" npm test
+```
+
+This will first set your `APPLITOOLS_API_KEY` into the node process then run `npm test`.
+
+### Adding Applitools Eyes to an Existing Project
+
+1. Install Applitools Eyes dependencies
+
+```sh
+npm install @applitools/eyes-selenium --save-dev
+```
+
+2. Add an example test
+
+```js
+'use strict';
+
+const { Builder, By } = require('selenium-webdriver');
+const { Eyes, VisualGridRunner, RunnerOptions, Target, RectangleSize, Configuration, BatchInfo, BrowserType, DeviceName, ScreenOrientation} = require('@applitools/eyes-selenium');
+const chrome = require('selenium-webdriver/chrome')
+
+describe('DemoApp - Ultrafast Grid', function () {
+  let runner, eyes, driver;
+
+  before(async () => {
+
+    // Create a new chrome web driver
+    const options = new chrome.Options();
+    if (process.env.CI === 'true') options.headless();
+
+    driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(options)
+        .build();
+
+    // Create a runner with concurrency of 1
+    const runnerOptions = new RunnerOptions().testConcurrency(5);
+    runner = new VisualGridRunner(runnerOptions);
+
+    // Create Eyes object with the runner, meaning it'll be a Visual Grid eyes.
+    eyes = new Eyes(runner);
+
+    // Initialize the eyes configuration.
+    let conf = new Configuration()
+
+    // You can get your api key from the Applitools dashboard
+    conf.setApiKey(process.env.APPLITOOLS_API_KEY)
+
+    // create a new batch info instance and set it to the configuration
+    conf.setBatch(new BatchInfo("Ultrafast Batch"));
+
+    // Add browsers with different viewports
+    conf.addBrowser(800, 600, BrowserType.CHROME);
+    conf.addBrowser(700, 500, BrowserType.FIREFOX);
+    conf.addBrowser(1600, 1200, BrowserType.IE_11);
+    conf.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+    conf.addBrowser(800, 600, BrowserType.SAFARI);
+
+    // Add mobile emulation devices in Portrait mode
+    conf.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
+    conf.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+
+    // set the configuration to eyes
+    eyes.setConfiguration(conf)
+
+
+  });
+
+  it('ultraFastTest', async () => {
+    // Call Open on eyes to initialize a test session
+    await eyes.open(driver, 'Demo App - JS Selenium 4', 'Ultrafast grid demo', new RectangleSize(800, 600));
+
+    // Navigate the browser to the "ACME" demo app.
+    // ⭐️ Note to see visual bugs, run the test using the above URL for the 1st run.
+    // but then change the above URL to https://demo.applitools.com/index_v2.html
+    // (for the 2nd run)
+    await driver.get("https://demo.applitools.com");
+
+    // check the login page with fluent api, see more info here
+    // https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
+    await eyes.check("Login Window", Target.window().fully());
+
+    // This will create a test with two test steps.
+    await driver.findElement(By.id("log-in")).click();
+
+    // Check the app page
+    await eyes.check("App Window", Target.window().fully());
+
+    // Call Close on eyes to let the server know it should display the results
+    await eyes.closeAsync();
+  });
+
+  after(async () => {
+    // Close the browser.
+    await driver.quit();
+
+    // If the test was aborted before eyes.close was called, ends the test as aborted.
+    await eyes.abortAsync();
+
+    // we pass false to this method to suppress the exception that is thrown if we
+    // find visual differences
+    const allTestResults = await runner.getAllTestResults();
+    console.log(allTestResults);
+  });
+});
+```
+## Option 2 - Run Locally
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-selenium-javascript-basic.git
+cd tutorial-selenium-javascript-basic
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Install the dependencies
+```
+npm install
+```
+
+3. Run the example test
+```
+APPLITOOLS_API_KEY="[Your API Key]" npm test
+```
+
+This will first set your `APPLITOOLS_API_KEY` into the node process then run `npm test`.
+
+### Adding Applitools Eyes to an Existing Project
+
+1. Install Applitools Eyes dependencies
+
+```sh
+npm install @applitools/eyes-selenium --save-dev
+```
+
+2. Add an example test
+
+```js
+'use strict';
+
+const { Builder, By } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const { Eyes, ClassicRunner, Target, RectangleSize, Configuration, BatchInfo} = require('@applitools/eyes-selenium');
+
+describe('DemoApp - ClassicRunner', function () {
+  let runner, eyes, driver;
+
+  beforeEach(async () => {
+    // Initialize the Runner for your test.
+    runner = new ClassicRunner();
+
+    // Initialize the eyes SDK (IMPORTANT: make sure your API key is set in the APPLITOOLS_API_KEY env variable).
+    eyes = new Eyes(runner);
+
+    // Initialize the eyes configuration.
+    let conf = new Configuration()
+
+    // set new batch
+    conf.setBatch(new BatchInfo("Demo batch"));
+
+    // set the configuration to eyes
+    eyes.setConfiguration(conf)
+
+    // Use Chrome browser
+    const options = new chrome.Options();
+    if (process.env.CI === 'true') options.headless();
+
+    driver = await new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(options)
+      .build();
+  });
+
+  it('Smoke Test', async () => {
+    // Start the test by setting AUT's name, test name and viewport size (width X height)
+    await eyes.open(driver, 'Demo App - javascript', 'Smoke Test', new RectangleSize(800, 600));
+
+    // Navigate the browser to the "ACME" demo app.
+    await driver.get("https://demo.applitools.com");
+
+    // To see visual bugs after the first run, use the commented line below instead.
+    // await driver.get("https://demo.applitools.com/index_v2.html");
+
+    // Visual checkpoint #1 - Check the login page.
+    await eyes.check("Login Window", Target.window().fully());
+
+    // This will create a test with two test steps.
+    // await driver.findElement(By.id("log-in")).click();
+
+    // Visual checkpoint #2 - Check the app page.
+    // await eyes.check("App Window", Target.window().fully());
+
+    // End the test.
+    await eyes.close();
+  });
+
+  afterEach(async () => {
+    // Close the browser.
+    await driver.quit();
+
+    // If the test was aborted before eyes.close was called, ends the test as aborted.
+    await eyes.abort();
+
+    // Wait and collect all test results
+    const allTestResults = await runner.getAllTestResults(false);
+    console.log(allTestResults);
+  });
+});
+```

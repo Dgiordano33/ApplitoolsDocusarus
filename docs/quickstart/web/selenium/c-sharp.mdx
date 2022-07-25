@@ -1,0 +1,335 @@
+---
+sidebar_position: 3
+title: C#
+---
+
+### Prerequisites
+
+1. Create a [free Applitools account](https://applitools.com/users/register) and get the Applitools API KEY
+
+2. Please set the `APPLITOOLS_API_KEY` environment variable
+
+    - Mac: `export APPLITOOLS_API_KEY='YOUR_API_KEY'`
+
+    - Windows: `set APPLITOOLS_API_KEY='YOUR_API_KEY'`
+
+    :::tip
+    1. You may skip this step if you want to hard code the API KEY inside the tutorial project's code.
+    2. It's better to store APPLITOOLS_API_KEY in the system variables (in Windows) or in the `~/.bash_profile` (in Mac) so that it is accessible from all Terminal shells
+    :::
+
+3. Install Visual Studio from [here](https://visualstudio.microsoft.com/downloads/)
+
+4. Install git from [https://git-scm.com​](https://git-scm.com)
+
+    :::tip
+    Installing `git` is optional. You need this mainly to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repo. Further, If you are Mac, you already have `git`.
+    :::
+
+5. Install Google Chrome browser from [https://www.google.com/chrome/](https://www.google.com/chrome/)
+
+6. Install [ChromeDriver](https://chromedriver.chromium.org/getting-started) on your machine and make sure it's is in the `PATH`.
+
+  Below are some resources from the internet that'll help you
+
+  * [Install on Mac](https://www.kenst.com/2015/03/installing-chromedriver-on-mac-osx/)
+  * [Install on windows](https://www.youtube.com/watch?v=dz59GsdvUF8)
+
+  Tip: On Mac, place the `chromedriver` executable in `/usr/local/bin` folder so that Visual Studio can find it.
+
+##  🚀 Run Tests
+
+There are two main ways in which you can run tests.
+
+The Applitools Ultrafast Grid (option 1) Test across all browsers and viewports 30-70 times faster than traditional test clouds. Using this approach, your tests will execute on a local browser once with the DOM, CSS, and additional artifacts captured by the SDK and sent to the Ultrafast Grid for parallel rendering and Visual AI comparison. This is the preferred execution method, however please note that it is a premium feature.
+
+The second approach is to Run Local (option 2). This is the classic test execution in which your tests execute locally and each call to eyes via the SDK will send a screenshot to Eyes for Visual AI comparison.
+
+While running tests using the classic approach is a great start - we recommend running tests on the Ultrafast Grid, the fastest way to ensure quality and consistency across all browsers, viewports, and devices.
+
+## Option 1 - Run With The Ultrafast Grid
+
+
+### 1. Introduction To the Ultrafast Grid
+In real world testing, you'll need to test your app on multiple browsers, viewports and mobile devices. So you'll need to run and re-run ALL the tests in different browsers and multiple viewports to ensure things are fine - which could take hours and hours to complete. You may also encounter browsers not opening properly, or hanging and what not.
+
+What if you could run in just one browser, just once, and still do cross-browser tests across various browsers, viewports and multiple mobile emulators? That's where [Ultrafast Grid](https://applitools.com/ultrafast-grid) comes in.
+
+:::tip TL;DR
+When you execute this tutorial, it'll run the test locally in Chrome browser but will show results in the following 5 combinations:
+
+1. Chrome browser (800 X 600 viewport)
+2. Chrome browser (700 X 500 viewport)
+3. Firefox browser  (1200 X 800 viewport)
+4. Firefox browser  (1600 X 1200 viewport)
+5. An iPhone4 emulator
+
+... all in ~30 seconds!⏰🚀
+:::
+
+## 2. What Is The Ultrafast Grid?
+
+The [Ultrafast Grid](https://applitools.com/ultrafast-grid) provides an elegant and an ultra fast way to render pages in different browsers, viewports and mobile simulators and then take screenshots and then send those screenshots to Applitools AI server. With Ultrafast Grid you just need to run your test in a single browser but perform end-to-end and cross-browser tests in various browsers such as Chrome,Firefox, IE, and also numerous combinations of viewports and in mobile simulators -- all in under a minute. Without Ultrafast Grid, you'll be wasting a lot of time and money running those tests in multiple browsers which could take hours and are error-prone.
+
+And since Ultrafast Grid is integrated with our Eyes AI, you'll actually find a lot more functional and visual bugs than you'd normally find.
+
+Further, you can use our [Root-Cause-Analysis (RCA)](https://applitools.com/root-cause-analysis) feature to figure out exactly which DOM element or CSS caused difference! So you can go backwards, from the screenshot to the code!
+
+**Best part**: All you need to do is to simply make `eyes.check` calls in your **existing Selenium tests** after adding our SDK and instantiating Ultrafast Grid. And that's all there is to it!
+
+## How it works
+Once you add and instantiate the Applitools SDK, simply add `eyes.check` calls wherever you want to check if the state of the page looks OK. Then run the Selenium test as usual. And while running the tests, anytime it encounters `eyes.check` (or similar methods), Applitools SDK uploads the DOM resource of that page to our [Ultrafast Grid](https://applitools.com/ultrafast-grid) behind the scenes and in batches. The Ultrafast Grid then renders every page in different browsers and mobile emulators (in parallel) and takes screenshots as per the configuration you set. Finally, it sends those screenshots to our AI Server.
+
+When you first run the test,  our AI server simply stores those 1st set of screenshots as **Baseline images**. When you run the same test again, the AI server will compare the new set of screenshots, aka **Checkpoint images**, with the corresponding **Baseline images** and highlights bugs.
+## 3. Getting Started With The Ultrafast Grid
+
+### Pre-requisites:
+
+1. Visual Studio installed on your machine.
+   * [Install it from here](https://visualstudio.microsoft.com/downloads/)
+2. Chrome Webdriver is on your machine and is in the `PATH`. Here are some resources from the internet that'll help you.
+   * [https://splinter.readthedocs.io/en/0.1/setup-chrome.html](https://splinter.readthedocs.io/en/0.1/setup-chrome.html)
+   * [https://stackoverflow.com/questions/38081021/using-selenium-on-mac-chrome](https://stackoverflow.com/questions/38081021/using-selenium-on-mac-chrome)
+   * [https://www.youtube.com/watch?time_continue=182&v=dz59GsdvUF8](https://www.youtube.com/watch?time_continue=182&v=dz59GsdvUF8)
+
+### Steps to run this example
+Use the ready-to-run [Github code](https://github.com/applitools/tutorial-selenium-csharp-ultrafastgrid) to start.
+1. Run `git clone https://github.com/applitools/tutorial-selenium-csharp-ultrafastgrid.git` or download it as a [Zip file](https://github.com/applitools/tutorial-selenium-csharp-ultrafastgrid.git/archive/master.zip) and extract it.
+2. Open the folder `tutorial-selenium-csharp-ultrafastgrid`
+3. Double click the `ApplitoolsTutorial.sln`. This will open the project in Visual Studio
+3. Change the APPLITOOLS_API_KEY with your own.
+4. Hit Run
+
+#### Example code (Program.cs)
+
+```csharp
+using Applitools;
+using Applitools.Selenium;
+using Applitools.VisualGrid;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
+using System.Drawing;
+using Configuration = Applitools.Selenium.Configuration;
+using ScreenOrientation = Applitools.VisualGrid.ScreenOrientation;
+
+namespace ApplitoolsTutorial
+{
+    public class UFGDemo
+    {
+
+		public static void Main(string[] args)
+		{
+			// Create a new chrome web driver
+			IWebDriver webDriver = new ChromeDriver();
+
+			// Create a runner with concurrency of 1
+			VisualGridRunner runner = new VisualGridRunner(new RunnerOptions().TestConcurrency(5));
+
+			// Create Eyes object with the runner, meaning it'll be a Visual Grid eyes.
+			Eyes eyes = new Eyes(runner);
+
+			SetUp(eyes);
+
+			try
+			{
+				// ⭐️ Note to see visual bugs, run the test using the above URL for the 1st run.
+				// but then change the above URL to https://demo.applitools.com/index_v2.html
+				// (for the 2nd run)
+				UltraFastTest(webDriver, eyes);
+
+			}
+			finally
+			{
+				TearDown(webDriver, runner);
+			}
+
+		}
+
+		public static void SetUp(Eyes eyes)
+		{
+
+			// Initialize eyes Configuration
+			Configuration config = new Configuration();
+
+			// You can get your api key from the Applitools dashboard
+			config.SetApiKey("APPLITOOLS_API_KEY");
+
+			// create a new batch info instance and set it to the configuration
+			config.SetBatch(new BatchInfo("Ultrafast Batch"));
+
+			// Add browsers with different viewports
+			config.AddBrowser(800, 600, BrowserType.CHROME);
+			config.AddBrowser(700, 500, BrowserType.FIREFOX);
+			config.AddBrowser(1600, 1200, BrowserType.IE_11);
+			config.AddBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+			config.AddBrowser(800, 600, BrowserType.SAFARI);
+
+			// Add mobile emulation devices in Portrait mode
+			config.AddDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.Portrait);
+			config.AddDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.Portrait);
+
+			// Set the configuration object to eyes
+			eyes.SetConfiguration(config);
+
+		}
+
+		public static void UltraFastTest(IWebDriver webDriver, Eyes eyes)
+		{
+
+			try
+			{
+
+				// Navigate to the url we want to test
+				webDriver.Url = "https://demo.applitools.com";
+
+				// Call Open on eyes to initialize a test session
+				eyes.Open(webDriver, "Demo App", "Ultrafast grid demo", new Size(800, 600));
+
+				// check the login page with fluent api, see more info here
+				// https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
+				eyes.Check(Target.Window().Fully().WithName("Login page"));
+
+				webDriver.FindElement(By.Id("log-in")).Click();
+
+				// Check the app page
+				eyes.Check(Target.Window().Fully().WithName("App page"));
+
+				// Call Close on eyes to let the server know it should display the results
+				eyes.CloseAsync();
+
+			}
+			catch (Exception e)
+			{
+				eyes.AbortAsync();
+			}
+
+		}
+
+		private static void TearDown(IWebDriver webDriver, VisualGridRunner runner)
+		{
+			// Close the browser
+			webDriver.Quit();
+
+			// we pass false to this method to suppress the exception that is thrown if we
+			// find visual differences
+			TestResultsSummary allTestResults = runner.GetAllTestResults();
+			System.Console.WriteLine(allTestResults);
+		}
+
+	}
+}
+```
+
+## Option 2 - Run Locally
+
+### Run The Demo App
+
+1. Get the code:
+    * Option 1: `git clone https://github.com/applitools/tutorial-selenium-csharp-basic.git`
+    * Option 2: Download it as a [Zip file](https://github.com/applitools/tutorial-selenium-csharp-basic/archive/master.zip) and unzip it.
+2. Import the project into Visual studio
+Open Visual Studio from the **command line** by running something like: `open /Applications/Visual\ Studio.app/` instead of double-clicking on it. **This approach will load all the envirnoment variables such as APPLITOOLS_API_KEY from the command line shell**.
+
+:::warning Note
+Do not open Visual Studio by double clicking it as it will not load environment variables. If you already have it open, please close it and open it from the Command line.
+:::
+
+3. In Visual Studio, open the `ApplitoolsTutorial` by navigating to the downloaded project via `File | open` and open **`ApplitoolsTutorials.sln`** file.
+
+4. Update SDKs. `ApplitoolsTutorial | ApplitoolTutorial | Packages (right click) | "Update"`. This will update all the dependencies.
+
+5. Hit Run button in Visual Studio to run the code
+
+## Add Applitools To An Existing Project
+
+```csharp
+using Applitools;
+using Applitools.Selenium;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System.Drawing;
+
+
+namespace ApplitoolsTutorial
+{
+
+    [TestFixture]
+    public class BasicDemo
+    {
+        private EyesRunner runner;
+        private Eyes eyes;
+
+        private IWebDriver driver;
+
+        [SetUp]
+        public void BeforeEach()
+        {
+            //Initialize the Runner for your test.
+            runner = new ClassicRunner();
+
+            // Initialize the eyes SDK (IMPORTANT: make sure your API key is set in the APPLITOOLS_API_KEY env variable).
+            eyes = new Eyes(runner);
+
+            // Use Chrome browser
+            driver = new ChromeDriver();
+        }
+
+
+        [Test]
+        public void BasicTest()
+        {
+            // Start the test by setting AUT's name, window or the page name that's being tested, viewport width and height
+            eyes.Open(driver, "Demo App", "Smoke Test", new Size(800, 600));
+
+            // Navigate the browser to the "ACME" demo app. To see visual bugs after the first run, use the commented line below instead.
+            driver.Url = "https://demo.applitools.com/";
+            //driver.Url = "https://demo.applitools.com/index_v2.html";
+
+            // Visual checkpoint #1 - Check the login page.
+            eyes.CheckWindow("Login Page");
+
+            // This will create a test with two test steps.
+            driver.FindElement(By.Id("log-in")).Click();
+
+            // Visual checkpoint #2 - Check the app page.
+            eyes.CheckWindow("App Window");
+
+            // End the test.
+            eyes.CloseAsync();
+        }
+
+        [TearDown]
+        public void AfterEach()
+        {
+            // Close the browser.
+            driver.Quit();
+
+            // If the test was aborted before eyes.close was called, ends the test as aborted.
+            eyes.AbortIfNotClosed();
+
+            //Wait and collect all test results
+            TestResultsSummary allTestResults = runner.GetAllTestResults();
+        }
+
+    }
+}
+```
+## ⚙️ Troubleshooting Common Issues
+
+1. Forgetting to set your API key (or getting 401 exception).
+    - Resolution: [See here](https://applitools.com/docs/topics/overview/obtain-api-key.html) and [here](https://help.applitools.com/hc/en-us/articles/360018576772-401-Unauthorized-Exception)
+
+2. Applitools is not opening the app (appears to crash).
+    - In order to make sure the screenshots are consistent across different tests runs. Applitools uses Viewport as an input. A viewport is simply the size of the screenshot you are taking (width and height). Applitools tries to resize the browser to that size before taking the screenshot. If you are running the app on a small laptop and/or have set the Viewport much larger than the laptop’s screen, then you’ll see this error.
+    - Solution: Reduce the height or the width. For more [see here](https://help.applitools.com/hc/en-us/articles/360018576772-401-Unauthorized-Exception).
+
+3. Not properly loading the API key from the environment variable into your IDE.
+    - After setting the APPLITOOLS_API_KEY in the environment variable to hold your Applitools API key, open the IDE from the command line terminal (and not from the IDE directly). On Mac, it’d look like this: Open a Terminal and then type: `open ~/Applications/Visual\ Studio.app`. This will load Visual Studio with all the environment variables.
+
+4. Trying to run the test but nothing happens
+    - Check if the APPLITOOLS_API_KEY is null
+
+5. Debug logs
+    - See this article to enable [debug logs](https://help.applitools.com/hc/en-us/articles/360006914932-How-can-I-enable-Applitools-Eyes-SDK-traces-logs-) to help file support ticket

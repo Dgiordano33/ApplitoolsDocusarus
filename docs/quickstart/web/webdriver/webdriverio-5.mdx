@@ -1,0 +1,316 @@
+---
+sidebar_position: 2
+title: WebdriverIO 5
+---
+*Note: This is for WebdriverIO 5. There are different tutorials for <a href="/tutorials/webdriverio.html">WebdriverIO 4</a> and <a href="/tutorials/webdriverio6.html">WebdriverIO 6</a>.*
+
+## Getting Started with Applitools
+
+Want to learn more about the Applitools platform and how it works? First get started with one of the following:
+
+* [🤖 How it Works](/overview/how-it-works.html)
+* [🖼 Analyzing Differences](/overview/analyzing-differences.html)
+* [🐞 Reporting Bugs](/getting-started/reporting-bugs-from-applitools.html)
+
+## Running Tests with Applitools
+
+### Prerequisites
+
+1. A [free Applitools account](https://applitools.com/users/register) and Applitools API KEY
+
+  :::tip Tip: Unsure how to set up your API key?
+  Learn how to get started at [Setting Up](/getting-started/setting-up-your-environment.html)
+  :::
+
+2. Node.js <https://nodejs.org>
+
+3. Git <https://git-scm.com>
+
+  :::tip Note: Installing `git` is optional
+  Installing git is used to clone the demo project from the Github repository. Instead of installing `git`, you can simply download the Zip file from the repository. Further, if you are Mac, you already have `git`.
+  :::
+
+4. Selenium Standalone Server <https://www.seleniumhq.org/download/>
+  
+  :::tip Note that this is a jar file
+  You should also have Java installed on your machine.
+  :::
+
+5. Google Chrome Browser <https://www.google.com/chrome/>
+
+6. ChromeDriver <https://chromedriver.chromium.org/getting-started>
+
+  :::tip ChromeDriver must be installed and in your `PATH`
+  Below are some resources from the internet that'll help you
+  
+  * [Install on Mac](https://www.kenst.com/2015/03/installing-chromedriver-on-mac-osx/)
+  * [Install on windows](https://www.youtube.com/watch?v=dz59GsdvUF8)
+
+  On Mac, place the `chromedriver` executable in `/usr/local/bin` folder so Eclipse and IntelliJ can find it.
+  :::
+
+## Option 1 - Run With The Ultrafast Grid
+
+### Running the Example Project
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-webdriverio5-ultrafastgrid
+cd tutorial-webdriverio5-ultrafastgrid
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Run the standalone server jar file
+
+```
+java -jar selenium-server-standalone-3.141.59.jar
+```
+
+:::tip
+Replace the jar file name with your jar file name
+:::
+
+3. Install the dependencies
+```
+npm install
+```
+
+4. Run the example test
+```
+APPLITOOLS_API_KEY="[Your API Key]" npm test
+```
+
+This will first set your `APPLITOOLS_API_KEY` into the node process then run `npm test`.
+
+### Adding Applitools Eyes to an Existing Node.js WebdriverIO Project
+
+Install Applitools Eyes dependencies:
+```sh
+npm install @applitools/eyes-webdriverio webdriverio@5 --save-dev
+```
+
+### Sample test
+
+```js
+'use strict';
+
+const {remote} = require('webdriverio');
+const {
+    VisualGridRunner,
+    RunnerOptions,
+    Eyes,
+    Target,
+    Configuration,
+    RectangleSize,
+    BatchInfo,
+    BrowserType,
+    DeviceName,
+    ScreenOrientation
+} = require('@applitools/eyes-webdriverio');
+
+let browser;
+let eyes;
+
+describe('wdio5', function () {
+    let runner
+
+    before(async () => {
+        const chrome = {
+            capabilities: {
+                browserName: 'chrome'
+            },
+            logLevel: 'silent',
+            hostname: (process.env.CI === 'true') ? 'selenium' : '127.0.0.1'
+        };
+        // Create a new chrome web driver
+        browser = await remote(chrome);
+
+        // Create a runner with concurrency of 5
+        const runnerOptions = new RunnerOptions().testConcurrency(5)
+        runner = new VisualGridRunner(runnerOptions);
+
+        // Create Eyes object with the runner, meaning it'll be a Visual Grid eyes.
+        eyes = new Eyes(runner);
+
+        // Initialize the eyes configuration
+        const configuration = new Configuration();
+
+        // create a new batch info instance and set it to the configuration
+        configuration.setBatch(new BatchInfo('Demo Batch - WDIO 5 - Ultrafast'))
+
+        // Add browsers with different viewports
+        configuration.addBrowser(800, 600, BrowserType.CHROME);
+        configuration.addBrowser(700, 500, BrowserType.FIREFOX);
+        configuration.addBrowser(1600, 1200, BrowserType.IE_11);
+        configuration.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+        configuration.addBrowser(800, 600, BrowserType.SAFARI);
+
+        // Add mobile emulation devices in Portrait mode
+        configuration.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
+        configuration.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+
+        // Set the configuration to eyes
+        eyes.setConfiguration(configuration);
+    });
+
+
+    it('ultraFastTest', async () => {
+
+        // Navigate to the url we want to test
+        // ⭐️ Note to see visual bugs, run the test using the above URL for the 1st run.
+        // but then change the above URL to https://demo.applitools.com/index_v2.html
+        // (for the 2nd run)
+        await browser.url('https://demo.applitools.com');
+
+        // Call Open on eyes to initialize a test session
+        await eyes.open(browser, 'Demo App - WDIO 5 - Ultrafast', 'Smoke Test - WDIO 5 - Ultrafast', new RectangleSize(800, 600));
+
+        // check the login page with fluent api, see more info here
+        // https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
+        await eyes.check('Login Window', Target.window().fully());
+
+        // Click the "Log in" button.
+        const loginButton = await browser.$('#log-in');
+        await loginButton.click();
+
+        // Check the app page
+        await eyes.check('App Window', Target.window().fully());
+
+        // Call Close on eyes to let the server know it should display the results
+        await eyes.close(false);
+    });
+
+    after(async () => {
+        // Close the browser
+        await browser.deleteSession();
+
+        // If the test was aborted before eyes.close was called, ends the test as aborted.
+        await eyes.abort();
+
+        // we pass false to this method to suppress the exception that is thrown if we
+        // find visual differences
+        const results = await runner.getAllTestResults();
+        console.log(results);
+    });
+
+});
+```
+
+
+## Option 2 - Run Locally
+
+### Running the Example Project
+
+1. Clone or download the repository and navigate to that folder
+```
+git clone https://github.com/applitools/tutorial-webdriverio5-basic
+cd tutorial-webdriverio5-basic
+```
+*Note: you can alternatively download the project as a Zip file and extract it*
+
+2. Run the standalone server jar file
+
+```
+java -jar selenium-server-standalone-3.141.59.jar
+```
+
+:::tip
+Replace the jar file name with your jar file name
+:::
+
+3. Install the dependencies
+```
+npm install
+```
+
+4. Run the example test
+```
+APPLITOOLS_API_KEY="[Your API Key]" npm test
+```
+
+This will first set your `APPLITOOLS_API_KEY` into the node process then run `npm test`.
+
+### Adding Applitools Eyes to an Existing Node.js WebdriverIO Project
+
+Install Applitools Eyes dependencies:
+```
+npm install @applitools/eyes-webdriverio webdriverio@5 --save-dev
+```
+
+#### Sample test
+
+```js
+'use strict';
+
+const chromedriver = require('chromedriver');
+const {remote} = require('webdriverio');
+const {
+  ClassicRunner,
+  Eyes,
+  Target,
+  Configuration
+} = require('@applitools/eyes-webdriverio');
+
+let browser;
+let eyes;
+
+describe('wdio5', function () {
+
+  before(async function () {
+    chromedriver.start();
+  });
+
+  beforeEach(async () => {
+    const chrome = {
+      capabilities: {
+        browserName: 'chrome'
+      }
+    };
+    browser = await remote(chrome);
+  });
+
+  afterEach(async () => {
+    await browser.deleteSession();
+    await eyes.abortIfNotClosed();
+
+    const results = await eyes.getRunner().getAllTestResults(false);
+    console.log(results);
+    console.log(results.getAllResults());
+  });
+
+  after(async function () {
+    chromedriver.stop();
+  });
+
+  it('Classic Runner Test', async () => {
+    await browser.url('https://demo.applitools.com');
+
+    const runner = new ClassicRunner();
+
+    eyes = new Eyes(runner);
+
+    const configuration = new Configuration();
+    configuration.setAppName('Demo App');
+    configuration.setTestName('Smoke Test');
+
+    eyes.setConfiguration(configuration);
+    await eyes.open(browser);
+
+    await browser.url('https://demo.applitools.com');
+
+    // Visual checkpoint #1.
+    await eyes.check('Login Window', Target.window());
+
+    // Click the "Log in" button.
+    // await driver.click(By.id('log-in'));
+    const loginButton = await browser.$('#log-in');
+    await loginButton.click();
+
+    // Visual checkpoint #2.
+    await eyes.check('App Window', Target.window());
+
+    await eyes.closeAsync();
+  });
+
+});
+```
