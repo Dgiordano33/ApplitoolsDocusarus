@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+title: Windows Coded UI
+description: This is a short description that we can use to intro the box
+---
+
+# Windows Coded-UI Tutorial
+
+The Applitools Eyes CodedUI SDK allows you to easily add visual checkpoints to your CodedUI tests. It takes care of getting screenshots of your application from the underlying CodedUI driver, sending them to the Eyes server for validation and failing the test in case differences are found.
+
+
+## Install the SDK
+```bash
+Install-Package Eyes.CodedUI
+```
+
+## Run your first test
+Applitools Eyes reports differences by comparing screenshots of your application with baseline images that define the expected appearance of the application at each step of the test. By default, the Eyes SDK detects the environment in which the application is running (namely, the operating system, the executable name and its window size) and compares the screenshots against baseline images that are specific to that environment. The first time you run a test in a given environment, its screenshots will be automatically saved as its baseline. Starting from the second run onward, you always have a baseline to compare against.
+
+The test below is a simple C# program that visually validates the default notepad program, before and after it types some text into it. It consists of two visual checkpoints, each validating the entire application window. The first time you run this test a new baseline will be created, and subsequent test runs will be compared to this baseline. If any screenshot mismatch its baseline image in a perceptible way, `eyes.Close()` will throw a `DiffsFoundException` which includes a URL that points to a detailed report where you can see the detected differences and take appropriate actions such as reporting bugs, updating the baseline and more.
+
+Before running the test, make sure to set the API key that identifies your account in the environment variable `APPLITOOLS_API_KEY` or directly assign it to the `eyes.api_key` property. You can find your API key under the user menu located at the right hand side of the test manager toolbar. If you don't yet have an account [create it now](https://applitools.com/sign-up) to obtain your key.
+
+```csharp
+
+namespace Applitools
+{
+    using CodedUI;
+    using Microsoft.VisualStudio.TestTools.UITesting;
+    using Microsoft.VisualStudio.TestTools.UITesting.WinControls;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
+    using System.Diagnostics;
+    using System.Drawing;
+
+    [CodedUITest]
+    public class NotepadTest
+    {
+        [TestMethod]
+        public void TestNotepad()
+        {
+            Process notepad = Process.Start("notepad");
+
+            // Open notepad
+            WinWindow testApp = new WinWindow();
+            testApp.SearchProperties[WinWindow.PropertyNames.ClassName] = "Notepad";
+
+            // Initialize the eyes SDK and set your private API key.
+            var eyes = new Eyes();
+            eyes.ApiKey = "YOUR_API_KEY";
+
+            try
+            {
+                // Start the test and set the application's viewport size to 800x600
+                eyes.Open(testApp, "Hello World!", "My first CodedUI C# test", new Size(800, 600));
+
+                // Visual checkpoint #1
+                eyes.CheckWindow("Hello!");
+
+                // Write something
+                WinEdit edit = new WinEdit(testApp);
+                Keyboard.SendKeys("Applitools CodedUI Demo");
+
+                // Visual checkpoint #2
+                eyes.CheckWindow("Write!");
+
+                // End the test
+                eyes.Close();
+            }
+            finally
+            {
+                // Close the app.
+                notepad.CloseMainWindow();
+
+                // If the test was aborted before eyes.Close was called, ends the test as aborted.
+                eyes.AbortIfNotClosed();
+            }
+        }
+    }
+}
+```
+
+
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.
+
+<Video embedUrl="https://www.youtube.com/embed/W0GdsOdg7Xw?rel=0" />
+

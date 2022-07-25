@@ -1,0 +1,18 @@
+import frameworkdata from '@site/src/data/frameworks/cypressdata.json'
+
+export default function Cypress () { 
+  return(
+    <>
+        <h2 style={{marginTop:"2rem"}}>Recognizing project structure</h2>
+        <p> The example project uses:</p>
+        <ul>
+            <li>{frameworkdata.language} as the programming language</li>
+            <li>{frameworkdata.automation} for browser automation</li>
+            <li>{frameworkdata.browser} as the local browser for testing</li>
+            <li>{frameworkdata.packageManager} for dependency management</li>
+            <li><a href="https://applitools.com/platform/eyes/">Applitools Eyes</a> for visual testing</li>
+            <li><a href="https://applitools.com/platform/ultrafast-grid/">Applitools Ultrafast Grid</a> for cross-browser execution</li>
+        </ul>
+        </>
+  )
+}
