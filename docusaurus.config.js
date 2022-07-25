@@ -8,16 +8,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Appltiools Docs',
   tagline: 'Get started visual testing today ',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://applitools-docusarus.vercel.app',
   baseUrl: '/',
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/favicon.ico',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'applitools', // Usually your GitHub org/user name.
-  projectName: 'ApplitoolsDocusaurus', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
