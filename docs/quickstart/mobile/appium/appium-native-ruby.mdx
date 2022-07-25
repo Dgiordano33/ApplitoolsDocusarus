@@ -1,0 +1,113 @@
+---
+title: Ruby
+---
+
+
+# Appium Native Ruby Tutorial
+The Applitools Eyes Appium Ruby SDK allows you to easily add visual checkpoints to your Ruby Appium tests. It takes care of getting screenshots of your application from the underlying WebDriver, sending them to the Eyes server for validation and failing the test in case differences are found.
+
+## Install the SDK
+
+```bash
+gem install eyes_appium
+```
+
+## Run your first test
+Applitools Eyes reports differences by comparing screenshots of your application with baseline images that define the expected appearance of the application at each step of the test. By default, the Eyes SDK detects the environment in which the application is running (namely, the operating system, the type of browser and its viewport size) and compares the screenshots against baseline images that are specific to that environment. The first time you run a test in a given environment, its screenshots will be automatically saved as its baseline. Starting from the second run onward, you always have a baseline to compare against.
+
+The test below is a simple program that visually validates the Hello World web-page at [https://applitools.com/helloworld](https://applitools.com/helloworld). It consists of two visual checkpoints, each validating the entire application window. The first time you run this test a new baseline will be created, and subsequent test runs will be compared to this baseline. If any screenshot mismatch its baseline image in a perceptible way, `eyes.close()` will throw a `DiffsFoundException` which includes a URL that points to a detailed report where you can see the detected differences and take appropriate actions such as reporting bugs, updating the baseline and more.
+
+Before running the test, make sure to set the API key that identifies your account in the environment variable `APPLITOOLS_API_KEY` or directly assign it to the `eyes.api_key` property. You can find your API key under the user menu located at the right hand side of the test manager toolbar. If you don't yet have an account [create it now](https://applitools.com/sign-up) to obtain your key.
+
+### IOS Simulator
+```ruby
+require 'logger'
+require 'eyes_appium'
+
+# Setup appium - Ensure the capabilities meets your environment.
+# Refer to http://appium.io documentation if required.
+def ios_caps
+  {
+    app: 'https://applitools.jfrog.io/artifactory/Examples/eyes-ios-hello-world.zip',
+    automationName: 'XCUITest',
+
+     # Fill in below options with values that match your environment
+    deviceName: 'iPhone 11',
+    platformName: 'ios',
+    platformVersion: '14.5',
+  }
+end
+
+def appium_opts
+  {
+    server_url: 'http://127.0.0.1:4723/wd/hub'
+  }
+end
+
+eyes = Applitools::Appium::Eyes.new()
+
+# eyes.log_handler = Logger.new(STDOUT)
+eyes.api_key = ENV['APPLITOOLS_API_KEY']
+
+begin
+  driver = Appium::Driver.new({ caps: ios_caps, appium_lib: appium_opts }, false)
+  driver.start_driver
+
+  eyes.open(app_name: 'Ruby SDK', test_name: 'Appium iOS app', driver: driver)
+  eyes.check('window', Applitools::Appium::Target.window())
+  eyes.close
+ensure
+  eyes.abort_if_not_closed
+  driver.driver_quit
+end
+
+```
+
+### Android
+
+```ruby
+require 'selenium-webdriver'
+require 'eyes_selenium'
+require 'rubygems'
+
+# Setup appium - Ensure the capabilities meets your environment.
+# Refer to http://appium.io documentation if required.
+def android_caps
+  {
+    # Fill in below options with values that match your environment
+    deviceName: 'Pixel3Android10',
+    platformName: 'android',
+    platformVersion: '10',
+    app: 'https://applitools.jfrog.io/artifactory/Examples/eyes-hello-world.apk'
+  }
+end
+
+def appium_opts
+  {
+    server_url: 'http://127.0.0.1:4723/wd/hub'
+  }
+end
+
+eyes = Applitools::Appium::Eyes.new()
+
+# eyes.log_handler = Logger.new(STDOUT)
+eyes.api_key = ENV['APPLITOOLS_API_KEY']
+
+begin
+  driver = Appium::Driver.new({ caps: android_caps, appium_lib: appium_opts }, false)
+  driver.start_driver
+
+  eyes.open(app_name: 'Ruby SDK', test_name: 'Appium Android app', driver: driver)
+  eyes.check('window', Applitools::Appium::Target.window())
+  eyes.close
+ensure
+  eyes.abort_if_not_closed
+  driver.driver_quit
+end
+```
+
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.
+

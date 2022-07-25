@@ -1,0 +1,158 @@
+---
+title: Java
+---
+
+# Appium Native Java Tutorial
+The Applitools Eyes Appium Java SDK allows you to easily add visual checkpoints to your Java Appium tests. It takes care of getting screenshots of your application from the underlying WebDriver, sending them to the Eyes server for validation and failing the test in case differences are found.
+
+
+
+
+## Install the SDK
+
+### Option 1 - Maven (Recommended)
+```xml
+<dependency>
+    <groupId>com.applitools</groupId>
+    <artifactId>eyes-appium-java3</artifactId>
+    <version>RELEASE</version>
+</dependency>
+```
+
+### Option 2 - Gradle
+```js
+dependencies {
+    compile 'com.applitools:eyes-appium-java3:+'
+}
+```
+
+
+## Run your first test
+Applitools Eyes reports differences by comparing screenshots of your application with baseline images that define the expected appearance of the application at each step of the test. By default, the Eyes SDK detects the environment in which the application is running (namely, the operating system, the type of browser and its viewport size) and compares the screenshots against baseline images that are specific to that environment. The first time you run a test in a given environment, its screenshots will be automatically saved as its baseline. Starting from the second run onward, you always have a baseline to compare against.
+
+The test below is a simple program that visually validates the Hello World web-page at [https://applitools.com/helloworld](https://applitools.com/helloworld). It consists of two visual checkpoints, each validating the entire application window. The first time you run this test a new baseline will be created, and subsequent test runs will be compared to this baseline. If any screenshot mismatch its baseline image in a perceptible way, `eyes.close()` will throw a `DiffsFoundException` which includes a URL that points to a detailed report where you can see the detected differences and take appropriate actions such as reporting bugs, updating the baseline and more.
+
+Before running the test, make sure to set the API key that identifies your account in the environment variable `APPLITOOLS_API_KEY` or directly assign it to the `eyes.api_key` property. You can find your API key under the user menu located at the right hand side of the test manager toolbar. If you don't yet have an account [create it now](https://applitools.com/sign-up) to obtain your key.
+
+### IOS Simulator
+```java
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+import com.applitools.eyes.appium.Eyes;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+class TestApplitools {
+    public static void main(String[] args) throws MalformedURLException {
+        Eyes eyes = new Eyes();
+        // This is your api key, make sure you use it in all your tests.
+        eyes.setApiKey("YOUR_API_KEY");
+
+        // Setup appium - Make sure the capabilities meets your environment.
+        // Refer to http://appium.io documentation if required.
+        DesiredCapabilities dc = new DesiredCapabilities();
+        dc.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.3.4");
+        dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.1");
+        dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+        dc.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 7");
+
+        // The original app from Appium github project.
+        dc.setCapability("app", "https://applitools.jfrog.io/artifactory/Examples/eyes-ios-hello-world.zip");
+
+        IOSDriver<WebElement> driver = new IOSDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), dc);
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+        try {
+            // Start visual UI testing
+            eyes.open(driver, "iOS test application", "test");
+
+            // Visual validation point #1
+            eyes.checkWindow("Initial view");
+            driver.findElement(By.name("TextField1")).sendKeys("3");
+            driver.findElement(By.name("TextField2")).sendKeys("5");
+            driver.findElement(By.name("ComputeSumButton")).click();
+            // Visual validation point #2
+            eyes.checkWindow("After compute");
+
+            // End visual UI testing. Validate visual correctness.
+            eyes.close();
+        } finally {
+            eyes.abortIfNotClosed();
+            driver.quit();
+        }
+    }
+
+```
+
+### Android (Real Device)
+
+```java
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.URL;
+import com.applitools.eyes.appium.Eyes;
+
+
+
+public class Appium_native_java {
+
+    public static void main(String[] args) throws Exception {
+
+        // Set desired capabilities.
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("deviceName", "DEVICE_NAME");
+        capabilities.setCapability("platformVersion", "PLATFORM_VERSION");
+        //NOTE: 📣 Download this app from https://applitools.jfrog.io/artifactory/Examples/app-debug.apk
+        capabilities.setCapability("app", "app-debug.apk");
+        capabilities.setCapability("browserName", "");
+        capabilities.setCapability("automationName", "UiAutomator2");
+
+        // Open the app.
+        WebDriver driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+
+        // Initialize the eyes SDK and set your private API key.
+        Eyes eyes = new Eyes();
+        eyes.setApiKey("YOUR_API_KEY");
+
+        eyes.setForceFullPageScreenshot(true);
+
+        try {
+
+            // Start the test.
+            eyes.open(driver, "Contacts!", "My first Appium native Java test!");
+
+            // Visual validation.
+            eyes.checkWindow("Contact list!");
+
+            // End the test.
+            eyes.close();
+
+        } finally {
+
+            // Close the app.
+            driver.quit();
+
+            // If the test was aborted before eyes.close was called, ends the test as aborted.
+            eyes.abortIfNotClosed();
+
+        }
+
+    }
+
+}
+
+```
+
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.

@@ -3,20 +3,87 @@ sidebar_position: 2
 title: LeanFT C#
 ---
 
-# Congratulations!
+The Applitools Eyes LeanFT C# SDK allows you to easily add visual checkpoints to your C# LeanFT tests. It takes care of getting screenshots of your application from the underlying LeanFT, sending them to the Eyes server for validation and failing the test in case differences are found.
 
-You have just learned the **basics of Docusaurus** and made some changes to the **initial template**.
+## Install the SDK
 
-Docusaurus has **much more to offer**!
+```bash
+Install-Package Eyes.LeanFT
+```
 
-Have **5 more minutes**? Take a look at **[versioning](../tutorial-extras/manage-docs-versions.md)** and **[i18n](../tutorial-extras/translate-your-site.md)**.
 
-Anything **unclear** or **buggy** in this tutorial? [Please report it!](https://github.com/facebook/docusaurus/discussions/4610)
+## Run your first test
+Applitools Eyes reports differences by comparing screenshots of your application with baseline images that define the expected appearance of the application at each step of the test. By default, the Eyes SDK detects the environment in which the application is running (namely, the operating system, the type of browser and its viewport size) and compares the screenshots against baseline images that are specific to that environment. The first time you run a test in a given environment, its screenshots will be automatically saved as its baseline. Starting from the second run onward, you always have a baseline to compare against.
 
-## What's next?
+The test below is a simple program that visually validates the Hello World web-page at [https://applitools.com/helloworld](https://applitools.com/helloworld). It consists of two visual checkpoints, each validating the entire application window. The first time you run this test a new baseline will be created, and subsequent test runs will be compared to this baseline. If any screenshot mismatch its baseline image in a perceptible way, `$eyes.close()` will throw a `DiffsFoundException` which includes a URL that points to a detailed report where you can see the detected differences and take appropriate actions such as reporting bugs, updating the baseline and more.
 
-- Read the [official documentation](https://docusaurus.io/).
-- Add a custom [Design and Layout](https://docusaurus.io/docs/styling-layout)
-- Add a [search bar](https://docusaurus.io/docs/search)
-- Find inspirations in the [Docusaurus showcase](https://docusaurus.io/showcase)
-- Get involved in the [Docusaurus Community](https://docusaurus.io/community/support)
+Before running the test, make sure to set the API key that identifies your account in the environment variable `APPLITOOLS_API_KEY` or directly assign it to the `eyes.api_key` property. You can find your API key under the user menu located at the right hand side of the test manager toolbar. If you don't yet have an account [create it now](https://applitools.com/sign-up) to obtain your key.
+
+```csharp
+namespace Applitools
+{
+    using System;
+    using System.Drawing;
+    using HP.LFT.SDK.Web;
+    using HP.LFT.SDK;
+
+    public class HelloWorldTest
+    {
+        public static void Main(string[] args)
+        {
+            // Init the LeanFT SDK
+            SDK.Init(new SdkConfiguration());
+
+            // Open a Chrome browser
+            IBrowser testBrowser = BrowserFactory.Launch(BrowserType.Chrome);
+
+            // Initialize the eyes SDK and set your private API key.
+            var eyes = new Eyes();
+            eyes.ApiKey = "YOUR_API_KEY";
+
+            try
+            {
+                // Start the test and set the browser's viewport size to 800x600
+                eyes.Open(testBrowser, "Hello World!", "My first LeanFT C# test", new Size(800, 600));
+
+                // Navigate the browser to the "hello world!" web-site.
+                testBrowser.Navigate("https://applitools.com/helloworld");
+
+                // Visual checkpoint #1
+                eyes.CheckWindow("Hello!");
+
+                // Click the "Click me!" button
+                IWebElement button = testBrowser.FindChildren<IWebElement>(new WebElementDescription { TagName = "button" })[0];
+                button.Click();
+
+                // Visual checkpoint #2
+                eyes.CheckWindow("Click!");
+
+                // End the test
+                eyes.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                // Close the browser.
+                testBrowser.Close();
+
+                // If the test was aborted before eyes.Close was called, ends the test as aborted.
+                eyes.AbortIfNotClosed();
+
+                // Close the LeanFT SDK
+                SDK.Cleanup();
+            }
+        }
+    }
+}
+```
+
+
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.

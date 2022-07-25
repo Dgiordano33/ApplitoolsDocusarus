@@ -1,0 +1,114 @@
+---
+title: Python
+---
+
+
+# Appium Native Python Tutorial
+The Applitools Eyes Appium Python SDK allows you to easily add visual checkpoints to your Python Appium tests. It takes care of getting screenshots of your application from the underlying WebDriver, sending them to the Eyes server for validation and failing the test in case differences are found.
+
+
+## Install the SDK
+
+```
+pip install eyes-selenium
+```
+
+## Run your first test
+
+Applitools Eyes reports differences by comparing screenshots of your application with baseline images that define the expected appearance of the application at each step of the test. By default, the Eyes SDK detects the environment in which the application is running (namely, the operating system, the type of browser and its viewport size) and compares the screenshots against baseline images that are specific to that environment. The first time you run a test in a given environment, its screenshots will be automatically saved as its baseline. Starting from the second run onward, you always have a baseline to compare against.
+
+The test below is a simple Python program that visually validates the Hello World web-page at https://applitools.com/helloworld. It consists of two visual checkpoints, each validating the entire application window. The first time you run this test a new baseline will be created, and subsequent test runs will be compared to this baseline. If any screenshot mismatch its baseline image in a perceptible way, `eyes.close()` will throw a DiffsFoundError which includes a URL that points to a detailed report where you can see the detected differences and take appropriate actions such as reporting bugs, updating the baseline and more.
+
+Before running the test, make sure to set the API key that identifies your account in the environment variable `APPLITOOLS_API_KEY` or directly assign it to the `eyes.api_key` property. You can find your API key under the user menu located at the right hand side of the test manager toolbar. If you don't yet have an account [create it now](https://applitools.com/sign-up) to obtain your key.
+
+### IOS Simulator
+
+```python
+
+from appium import webdriver
+from applitools.selenium import Eyes
+
+class HelloWorld:
+
+    # Initialize the eyes SDK and set your private API key.
+    eyes = Eyes()
+    eyes.api_key = 'YOUR_API_KEY'
+
+    # Set the desired capabilities.
+    desired_caps = {}
+    desired_caps['platformName'] = 'iOS'
+    desired_caps['platformVersion'] = '10.1'
+    desired_caps['deviceName'] = 'DEVICE_NAME'
+    desired_caps['browserName'] = ''
+    desired_caps['automationName'] = 'XCUITest' # Possible without.
+    desired_caps['app'] = 'https://applitools.jfrog.io/artifactory/Examples/eyes-ios-hello-world.zip'
+
+    wd = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+    wd.implicitly_wait(60)
+
+    try:
+
+        # Start the test.
+        eyes.open(driver=wd, app_name='Contacts!', test_name='My first Appium native Python test!')
+
+        # Visual UI testing
+        eyes.check_window('Contact list!')
+
+    finally:
+
+        # Close the app.
+        wd.quit()
+
+        # Close the test
+        eyes.close()
+
+```
+
+### Android (Real Device)
+
+```python
+from appium import webdriver
+from applitools.selenium import Eyes
+
+class HelloWorld:
+
+    # Initialize the eyes SDK and set your private API key.
+    eyes = Eyes()
+    eyes.api_key = 'YOUR_API_KEY'
+
+    # Desired capabilities.
+    desired_caps = dict(
+        platformName = 'Android',
+        deviceName = 'DEVICE_NAME',
+        platformVersion= 'PLATFORM_VERSION',
+        automationName= 'UiAutomator2',
+        app='https://applitools.jfrog.io/artifactory/Examples/eyes-hello-world.apk')
+
+    # Open the app.
+    wd = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+    wd.implicitly_wait(60)
+
+    try:
+
+        # Start the test.
+        eyes.open(driver=wd, app_name='Contacts', test_name='My first Appium native Python test!')
+
+        # Visual UI testing.
+        eyes.check_window('Contact list!')
+
+        # End the test.
+        eyes.close()
+
+    finally:
+
+        # Close the app.
+        wd.quit()
+
+        # If the test was aborted before eyes.close was called, ends the test as aborted.
+        eyes.abort_if_not_closed()
+```
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.
+

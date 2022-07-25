@@ -1,0 +1,175 @@
+---
+sidebarDepth: 1
+---
+
+<div class="tutorialContent">
+
+# Appium Web C# Tutorial
+The Applitools Eyes Selenium for C# SDK allows you to easily add visual checkpoints to your C# Appium web-related tests. It takes care of getting screenshots of your application from the underlying WebDriver, sending them to the Eyes server for validation and failing the test in case differences are found.
+
+
+## Install the SDK
+
+```bash
+Install-Package Eyes.Selenium
+```
+
+
+## Run your first test
+Applitools Eyes reports differences by comparing screenshots of your application with baseline images that define the expected appearance of the application at each step of the test. By default, the Eyes SDK detects the environment in which the application is running (namely, the operating system, the type of browser and its viewport size) and compares the screenshots against baseline images that are specific to that environment. The first time you run a test in a given environment, its screenshots will be automatically saved as its baseline. Starting from the second run onward, you always have a baseline to compare against.
+
+The test below is a simple program that visually validates the Hello World web-page at [https://applitools.com/helloworld](https://applitools.com/helloworld). It consists of two visual checkpoints, each validating the entire application window. The first time you run this test a new baseline will be created, and subsequent test runs will be compared to this baseline. If any screenshot mismatch its baseline image in a perceptible way, `eyes.close()` will throw a `DiffsFoundException` which includes a URL that points to a detailed report where you can see the detected differences and take appropriate actions such as reporting bugs, updating the baseline and more.
+
+Before running the test, make sure to set the API key that identifies your account in the environment variable `APPLITOOLS_API_KEY` or directly assign it to the `eyes.api_key` property. You can find your API key under the user menu located at the right hand side of the test manager toolbar. If you don't yet have an account [create it now](https://applitools.com/sign-up) to obtain your key.
+
+### IOS Simulator
+```csharp
+using System;
+using Applitools.Selenium;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
+
+namespace Demos
+{
+    public class HelloWorld_IOS
+    {
+        public static void Main(string[] args)
+        {
+            // This is your api key, make sure you use it in all your tests.
+            Eyes eyes = new Eyes();
+            eyes.ApiKey = "YOUR_API_KEY";
+
+            // Setup appium - Ensure the capabilities meets your environment.
+            // Refer to http://appium.io documentation if required.
+            DesiredCapabilities dc = new DesiredCapabilities();
+            dc.SetCapability("platformName", "iOS");
+            dc.SetCapability("browserName", "Safari");
+
+            IWebDriver driver = new RemoteWebDriver(new Uri("http://10.0.2.2:4723/wd/hub"), dc);
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(60));
+
+            try
+            {
+                // Start the test.
+                eyes.Open(driver, "Hello World!", "My first Selenium for C# test!");
+
+                // Navigate the browser to the "hello world!" web-site.
+                driver.Url = "https://applitools.com/helloworld";
+
+                // Visual checkpoint #1.
+                eyes.Check("Hello!", Target.Window());
+
+                // Click the "Click me!" button.
+                driver.FindElement(By.TagName("button")).Click();
+
+                // Visual checkpoint #2.
+                eyes.Check("Click!", Target.Window());
+
+                // End the test.
+                eyes.Close();
+            }
+            finally
+            {
+                eyes.AbortIfNotClosed();
+                driver.Quit();
+            }
+        }
+    }
+}
+```
+
+### Android (Real Device)
+
+```csharp
+using System;
+using Applitools.Selenium;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
+
+namespace Demos
+{
+    public class HelloWorld_Android
+    {
+        public static void Main(string[] args)
+        {
+
+            // Initialize the eyes SDK and set your private API key.
+            Eyes eyes = new Eyes();
+            eyes.ApiKey = "YOUR_API_KEY";
+
+            // Set the desired capabilities.
+            DesiredCapabilities dc = new DesiredCapabilities();
+            dc.SetCapability("platformName", "Android");
+            dc.SetCapability("platformVersion", "PLATFORM_VERSION");
+            dc.SetCapability("deviceName", "DEVICE_NAME");
+            dc.SetCapability("browserName", "BROWSER_NAME");
+
+            IWebDriver driver = new RemoteWebDriver(new Uri("http://127.0.0.1:4723/wd/hub"), dc);
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(60));
+
+            try
+            {
+
+                // Start visual UI testing.
+                eyes.Open(driver, "Hello World!", "My first Appium web C# test!");
+
+                // Navigate the browser to the "hello world!" web-site.
+                driver.Url = "https://applitools.com/helloworld";
+
+                // Visual checkpoint #1.
+                eyes.Check("Hello!", Target.Window());
+
+                // Click the "Click me!" button.
+                driver.FindElement(By.TagName("button")).Click();
+
+                // Visual checkpoint #2.
+                eyes.Check("Click!", Target.Window());
+
+                // End the test.
+                eyes.Close();
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex);
+
+            }
+            finally
+            {
+
+                // Close the browser.
+                driver.Quit();
+
+                // If the test was aborted before eyes.Close was called, ends the test as aborted.
+                eyes.AbortIfNotClosed();
+
+            }
+        }
+    }
+}
+```
+
+## Analyze your test results
+Congratulations! You've successfully run your first visual UI test with Applitools Eyes! A detailed report is ready for your inspection at the Applitools Eyes test manager. Watch this 5 minute video to get acquainted with the test manager and to learn the basics of baseline maintenance.
+
+[Login to Applitools](https://applitools.com/users/login) and analyze the results.
+
+<Video embedUrl="https://www.youtube.com/embed/W0GdsOdg7Xw?rel=0" />
+
+
+
+## Learn more
+Applitools Eyes is a powerful platform for automated visual UI testing that supports full page screenshots, page layout matching, cross-device and browser testing, test batching, baseline branching and merging, automated baseline maintenance, collaboration features, and much more. Applitools has over [40 SDKs](https://applitools.com/tutorial) supporting a broad range of testing environments.
+
+#### Reference documentation
+
+To learn more, check out the Applitools Eyes [documentation](https://applitools.com/docs) and tutorials for other testing environments.
+
+#### Request a demo
+If you want to see a demo of all our other features, you do [request a demo](https://applitools.com/request-demo?utm_source=tutorials)
+
+#### Knowledge base and Support
+You can search our [Knowldege base](https://help.applitools.com/hc/en-us/) for more information.  You can also file a contact our support team and [file a Ticket](https://help.applitools.com/hc/en-us/requests/new).<br/><br/><br/><span style="margin-right:15px;">[Terms & Conditions](https://applitools.com/terms-of-use)</span> <span style="margin-right:15px;font-weight:9">[Privacy Policy](https://applitools.com/privacy-policy)</span> <span style="margin-right:15px;font-weight:9">[GDPR](https://applitools.com/gdpr) </span>© 2021 Applitools. All rights reserved.
+
+</div>
