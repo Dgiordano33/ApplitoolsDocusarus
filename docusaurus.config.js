@@ -31,9 +31,6 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/tutorials/', // Serve the docs at the site's root
           // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/applitools',
         },
         blog: {
           showReadingTime: true,
