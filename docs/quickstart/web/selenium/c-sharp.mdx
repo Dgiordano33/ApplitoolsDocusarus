@@ -2,6 +2,7 @@
 sidebar_position: 3
 title: C#
 ---
+import PartialOutro from '@site/docs/_partials/_partials-outro_.mdx'
 
 ### Prerequisites
 
@@ -316,20 +317,4 @@ namespace ApplitoolsTutorial
     }
 }
 ```
-## ⚙️ Troubleshooting Common Issues
-
-1. Forgetting to set your API key (or getting 401 exception).
-    - Resolution: [See here](https://applitools.com/docs/topics/overview/obtain-api-key.html) and [here](https://help.applitools.com/hc/en-us/articles/360018576772-401-Unauthorized-Exception)
-
-2. Applitools is not opening the app (appears to crash).
-    - In order to make sure the screenshots are consistent across different tests runs. Applitools uses Viewport as an input. A viewport is simply the size of the screenshot you are taking (width and height). Applitools tries to resize the browser to that size before taking the screenshot. If you are running the app on a small laptop and/or have set the Viewport much larger than the laptop’s screen, then you’ll see this error.
-    - Solution: Reduce the height or the width. For more [see here](https://help.applitools.com/hc/en-us/articles/360018576772-401-Unauthorized-Exception).
-
-3. Not properly loading the API key from the environment variable into your IDE.
-    - After setting the APPLITOOLS_API_KEY in the environment variable to hold your Applitools API key, open the IDE from the command line terminal (and not from the IDE directly). On Mac, it’d look like this: Open a Terminal and then type: `open ~/Applications/Visual\ Studio.app`. This will load Visual Studio with all the environment variables.
-
-4. Trying to run the test but nothing happens
-    - Check if the APPLITOOLS_API_KEY is null
-
-5. Debug logs
-    - See this article to enable [debug logs](https://help.applitools.com/hc/en-us/articles/360006914932-How-can-I-enable-Applitools-Eyes-SDK-traces-logs-) to help file support ticket
+<PartialOutro/>
