@@ -9,7 +9,7 @@ const config = {
   title: 'Appltiools Docs',
   tagline: 'Get started visual testing today ',
   url: 'https://applitools-docusarus.vercel.app',
-  baseUrl: '/docs',
+  baseUrl: '/',
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/favicon.ico',
