@@ -5,16 +5,16 @@
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
         "frameworkType" : "web",
-        "href" : "/tutorials/category/selenium"
+        "href" : "/category/selenium"
     },
     {
         "name": "Windows UFT",
         "logo": "https://applitools.com/wp-content/uploads/2022/08/Uft.png",
-        "href" : "/tutorials/quickstart/desktop/windows-uft"
+        "href" : "/quickstart/desktop/windows-uft"
     },
     {
         "name": "Windows Apps",
         "logo": "https://applitools.com/wp-content/uploads/2022/08/MSFT-a203b22d.png",
-        "href" : "/tutorials/quickstart/desktop/windows-apps"
+        "href" : "/quickstart/desktop/windows-apps"
     }
 ]

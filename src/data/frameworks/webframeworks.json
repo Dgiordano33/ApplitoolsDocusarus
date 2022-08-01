@@ -5,7 +5,7 @@
         "icon":"SeleniumIcon",
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
-        "href" : "/tutorials/category/selenium",
+        "href" : "/category/selenium",
         "frameworkType" : "web",
         "packageManager" : "npm",
         "language" : "JavaScript",
@@ -16,7 +16,7 @@
     {
         "name": "Cypress",
         "logo": "https://applitools.com/wp-content/uploads/2020/08/Cypress_Hex-1.svg",
-        "href" : "/tutorials/quickstart/web/cypress",
+        "href" : "/quickstart/web/cypress",
         "frameworkType" : "web",
         "packageManager" : "npm",
         "language" : "JavaScript",
@@ -27,36 +27,36 @@
     {
         "name": "Playwright",
         "logo": "https://applitools.com/wp-content/uploads/2022/07/playwright-logo.jpg",
-        "href" : "/tutorials/quickstart/web/playwright"
+        "href" : "/quickstart/web/playwright"
     },
     {
         "name": "Puppeteer",
         "logo": "https://applitools.com/wp-content/uploads/2020/09/Puppeteer.png",
-        "href" : "/tutorials/quickstart/web/puppeteer"
+        "href" : "/quickstart/web/puppeteer"
     },
     {
         "name": "WebDriverIO",
         "logo": "https://applitools.com/wp-content/uploads/2020/08/Webdriver_Hex-1.svg",
-        "href" : "/tutorials/category/webdriver"
+        "href" : "/category/webdriver"
     },
     {
         "name": "Testcafe",
         "logo": "https://applitools.com/wp-content/uploads/2020/08/TestCafe_Hex-1.svg",
-        "href" : "/tutorials/quickstart/web/testcafe"
+        "href" : "/quickstart/web/testcafe"
     },
     {
         "name": "Watir",
         "logo": "https://applitools.com/wp-content/uploads/2020/08/Watir_Hex-1.svg",
-        "href" : "/tutorials/quickstart/web/watir"
+        "href" : "/quickstart/web/watir"
     },
     {
         "name": "Capybara",
         "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
-        "href" : "/tutorials/quickstart/web/capybara"
+        "href" : "/quickstart/web/capybara"
     },
     {
         "name": "Protractor",
         "logo": "https://applitools.com/wp-content/uploads/2020/08/Protractor_Hex-1.svg",
-        "href" : "/tutorials/quickstart/web/protractor"
+        "href" : "/quickstart/web/protractor"
     }
 ]

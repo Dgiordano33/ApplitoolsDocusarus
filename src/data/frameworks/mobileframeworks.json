@@ -5,21 +5,21 @@
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
         "frameworkType" : "web",
-        "href" : "/tutorials/category/appium"
+        "href" : "/category/appium"
     },
     {
         "name": "Espresso",
         "logo": "https://applitools.com/wp-content/uploads/2020/08/Espresso_Hex-1.svg",
-        "href" : "/tutorials/quickstart/mobile/espresso"
+        "href" : "/quickstart/mobile/espresso"
     },
     {
         "name": "Calabash",
         "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
-        "href" : "/tutorials/quickstart/mobile/cypress"
+        "href" : "/quickstart/mobile/cypress"
     },
     {
         "name": "XCUI",
         "logo": "https://applitools.com/wp-content/uploads/2022/08/xcui-test.png",
-        "href" : "/tutorials/quickstart/mobile/cypress"
+        "href" : "/quickstart/mobile/cypress"
     }
 ]

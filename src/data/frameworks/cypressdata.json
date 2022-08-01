@@ -4,7 +4,7 @@
         "logo": "/static/img/apple-icon.png",
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
-        "href" : "/tutorials/category/selenium",
+        "href" : "/category/selenium",
         "frameworkType" : "web",
         "packageManager" : "npm",
         "language" : "JavaScript",
