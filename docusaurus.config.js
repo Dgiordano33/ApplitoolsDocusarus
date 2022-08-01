@@ -9,7 +9,7 @@ const config = {
   title: 'Appltiools Docs',
   tagline: 'Get started visual testing today ',
   url: 'https://applitools-docusarus.vercel.app',
-  baseUrl: '/',
+  baseUrl: '/docs/',
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/favicon.ico',
@@ -29,7 +29,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: '/tutorials/', // Serve the docs at the site's root
+          routeBasePath: '/', // Serve the docs at the site's root
           // Please change this to your repo.
         },
         blog: {
@@ -60,7 +60,13 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Quick Starts',
+          },
+          {
+            type: 'doc',
+            docId: 'intro',
+            position: 'left',
+            label: 'Quick Starts',
           },
           {
             type: 'doc',
@@ -74,7 +80,6 @@ const config = {
             position: 'left',
             label: 'References',
           },
-        
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
