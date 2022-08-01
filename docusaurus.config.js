@@ -60,7 +60,7 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Quick Starts',
+            label: 'Platform',
           },
           {
             type: 'doc',

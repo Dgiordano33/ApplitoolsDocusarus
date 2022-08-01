@@ -1,7 +1,7 @@
 [
     {
         "name": "Appium",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2020/08/Appium_Hex-1.svg",
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
         "frameworkType" : "web",
@@ -9,7 +9,7 @@
     },
     {
         "name": "Espresso",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2020/08/Espresso_Hex-1.svg",
         "href" : "/tutorials/quickstart/mobile/espresso"
     },
     {
@@ -19,7 +19,7 @@
     },
     {
         "name": "XCUI",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2022/08/xcui-test.png",
         "href" : "/tutorials/quickstart/mobile/cypress"
     }
 ]

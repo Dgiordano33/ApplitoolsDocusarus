@@ -1,7 +1,7 @@
 [
     {
         "name": "Windows Coded UI",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2022/08/MSFT-a203b22d.png",
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
         "frameworkType" : "web",
@@ -9,12 +9,12 @@
     },
     {
         "name": "Windows UFT",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2022/08/Uft.png",
         "href" : "/tutorials/quickstart/desktop/windows-uft"
     },
     {
         "name": "Windows Apps",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2022/08/MSFT-a203b22d.png",
         "href" : "/tutorials/quickstart/desktop/windows-apps"
     }
 ]

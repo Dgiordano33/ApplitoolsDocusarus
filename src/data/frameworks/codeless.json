@@ -1,7 +1,7 @@
 [
     {
         "name": "Selenium IDE",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2020/08/Selenium-SI_Hex-1.svg",
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
         "frameworkType" : "web",
@@ -9,12 +9,12 @@
     },
     {
         "name": "UFT",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2022/08/Uft.png",
         "href" : "/tutorials/quickstart/web/cypress"
     },
     {
         "name": "TestIM",
-        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "logo": "https://applitools.com/wp-content/uploads/2022/08/testim-squarelogo-1577695622940.jpg",
         "href" : "/tutorials/quickstart/web/cypress"
     }
 ]
