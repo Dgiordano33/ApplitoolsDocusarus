@@ -1,5 +1,7 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
+title: How To Analyze Differences
+sidebar_title: Analyzing Differences
 ---
 
 # Analyzing Differences
@@ -12,13 +14,11 @@ Applitools SDKs support all major automated testing frameworks and allow you  to
 
 When you first run the test, our AI engine stores those first set of screenshots as **Baseline images**. When you run the same test again (and everytime there after), the AI server compares the new set of screenshots, aka **Checkpoint images**, with the corresponding **Baseline images** and highlights differences in a pink color.
 
-
 ## Marking the test as "Pass" or "Fail"
 
 When the AI compares the baseline and the checkpoint image, if it finds a legitimate difference, it will mark the test as **Unresolved**. This is because the AI doesn't know if the difference is because of a new feature or a real bug, and will wait for you to mark it as a Pass/Fail for the 1st time.
 
 If you mark the **Unresolved** checkpoint image as <strong>"Failed"</strong>, it will only mark the current test result as Failed.
-
 
 
 ::: tip Note: To automatically mark the checkpoint as a "Fail" in future test runs, you need to do the following:

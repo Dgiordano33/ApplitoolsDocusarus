@@ -50,10 +50,10 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Applitools Documentation',
+        title: 'Documentation',
         logo: {
           alt: 'My Site Logo',
-          src: 'https://applitools.com/wp-content/uploads/2022/04/Applitools-Logo_831x542.jpg',
+          src: 'https://applitools.com/wp-content/uploads/2022/08/Applitools-Logo-Set-V2_Applitools_1c_Green_Applitools_fullcolor_tagline-1.svg',
         },
         items: [
           {

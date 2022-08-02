@@ -1,23 +1,8 @@
 ---
-sidebar_position: 3
+slug: /platform/applitools-ufg
+title: Ultrafast Grid
+
 ---
-# Applitools Ultrafast Grid
-
-In real world testing, you'll need to test your app on multiple browsers, viewports and mobile devices. So you'll need to run and re-run ALL the tests in different browsers and multiple viewports to ensure things are fine - which could take hours and hours to complete. You may also encounter browsers not opening properly, or hanging and what not.
-
-What if you could run in just one browser, just once, and still do cross-browser tests across various browsers, viewports and multiple mobile emulators? That's where [Ultrafast Grid](https://applitools.com/ultrafast-grid) comes in.
-
-:::tip TL;DR
-When you execute this tutorial, it'll run the test locally in Chrome browser but will show results in the following 5 combinations:
-
-1. Chrome browser (800 X 600 viewport)
-2. Chrome browser (700 X 500 viewport)
-3. Firefox browser  (1200 X 800 viewport)
-4. Firefox browser  (1600 X 1200 viewport)
-5. An iPhone4 emulator
-
-... all in ~30 seconds!⏰🚀
-:::
 
 ## What Is The Ultrafast Grid?
 
@@ -34,3 +19,27 @@ Further, you can use our [Root-Cause-Analysis (RCA)](https://applitools.com/root
 Once you add and instantiate the Applitools SDK, simply add `eyes.check` calls wherever you want to check if the state of the page looks OK. Then run the Selenium test as usual. And while running the tests, anytime it encounters `eyes.check` (or similar methods), Applitools SDK uploads the DOM resource of that page to our [Ultrafast Grid](https://applitools.com/ultrafast-grid) behind the scenes and in batches. The Ultrafast Grid then renders every page in different browsers and mobile emulators (in parallel) and takes screenshots as per the configuration you set. Finally, it sends those screenshots to our AI Server.
 
 When you first run the test,  our AI server simply stores those 1st set of screenshots as **Baseline images**. When you run the same test again, the AI server will compare the new set of screenshots, aka **Checkpoint images**, with the corresponding **Baseline images** and highlight bugs.
+
+## Benefits
+### Scale Your Testing Exponentially
+Applitools AI enables organizations to verify their user interface at tremendous scale without requiring additional resources or work. Applitools reduces manual work across the entire testing process like test creation, analysis, maintenance, and execution and allows teams to test an exponential amount of their application. 
+
+### Drastically Improve Test Coverage
+Organizations can improve the test coverage of more of their applications across more browsers and devices that their customers are using without. Simply add Applitools to your current testing project or to any new features and workflows and you’ll have 100% test coverage thanks to Visual AI.
+
+### Proactively Monitor Your Frontend
+Applitools allows teams to proactively validate their frontend and increase the number of visual, functional, and accessibility bugs found before production in a way not possible with traditional testing.
+
+## Features
+
+### Visual AI
+[Learn More](/platform/applitools-eyes/visual-ai)
+### Match Level
+[Learn More](/platform/applitools-eyes/match-level)
+### Layout Testing
+[Learn More](/platform/applitools-eyes/layout-testing)
+### Root Cause Analysis
+[Learn More](/platform/applitools-eyes/root-cause-analysis)
+### Accessibility Testing
+[Learn More](/platform/applitools-eyes/accessibility)
+
