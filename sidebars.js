@@ -12,28 +12,32 @@
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   tutorialSidebar: [
-    {
-      type: 'category',
-      label: 'Platform',
-      collapsible: false,
-      items: [
-        'platform/applitools-eyes/index',
-        'platform/applitools-ufg',
-        'platform/applitools-nmg',
-      ],
-    },
+    
     {
       type: 'category',
       label: 'Getting Started',
       collapsible: false,
       items: [
+        {
+          type: 'category',
+          label: 'Platform Overview',
+          items: [
+            'platform/applitools-eyes/index',
+            'platform/applitools-ufg',
+            'platform/applitools-nmg',
+          ],
+        },
         'getting-started/adding-applitools',
         'getting-started/retrieving-api-key',
+        'getting-started/analyzing-differences',
+        'getting-started/match-level',
+        'getting-started/accessibility',
+        'getting-started/root-cause-analysis',
       ],
     },
     {
       type: 'category',
-      label: 'Quickstart',
+      label: 'Quickstarts',
       collapsible: false,
       items: [
         {
@@ -66,7 +70,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Guides',
-      collapsible: false,
+      collapsed: false,
       items: [
         {
           type: 'category',
@@ -78,7 +82,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'References',
-      collapsible: false,
+      collapsed: false,
       items: [
         'reference/sdk-api/index',
         'reference/server-api/index',
