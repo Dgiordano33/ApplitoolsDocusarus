@@ -1,9 +1,58 @@
 ---
 sidebar_position: 2
-title: Setting Match Level 
-sidebar_title: Match Level
+title: Setting Match Levels
 ---
 
-# Applitools Match Level
+# How to use Applitools Match Levels
 
-Applitools Eyes is a powerful platform for automated visual UI testing that supports full page screenshots, page layout matching, cross-device and browser testing, test batching, baseline branching and merging, automated baseline maintenance, collaboration features, and much more.
+The match level determines the way by which Eyes compares the checkpoint image with the baseline image.
+
+The sections of this article describe three aspects of using the match level:
+
+Available match levels: The different match levels available and how they affect image comparison.
+How to specify a match level when running tests: How to specify the match level when running tests.
+Previewing the effect of a match level: How to preview diffs resulting from different match levels when reviewing test results.
+
+## Available match levels
+Eyes provides the following distinct match levels:
+
+#### STRICT
+
+This is the recommended level when you want to verify that the page content matches the baseline image closely enough that the human eye would not see any difference. With this level, Eyes detects changes in text, font, color, graphics, and position of elements. It aims to detect differences that are visible to the human eye while ignoring differences in pixel values that are platform dependent due to the rendering software and hardware. The Strict match level is most effective when used for regression tests on a particular browser/OS with mostly static content. This is the default match level.
+
+#### LAYOUT
+
+This level is useful for validating that the page layout is consistent. With this level, Eyes identifies the various page elements in the checkpoint and baseline images, such as text, images, buttons, and columns. It then verifies that the relative positions of these elements are consistent. This match level can detect elements that have appeared, disappeared, or moved. With this match level, the Eyes matching engine ignores differences in the actual content text and graphics, color, and other style changes. This match level is most effective when used to validate pages with dynamic content, language localization, and cross-environment testing where a single baseline is used for multiple execution environments (different operating systems, browsers, devices, viewport sizes, and orientations).
+
+#### CONTENT
+
+This match level is similar to the strict match level but ignores color and light style differences. It is effective when your content is static but the color varies.
+
+#### EXACT
+
+This match level causes the Eyes matching engine to do a pixel to pixel comparison of the checkpoint and baseline images. It is sensitive to differences such as rendering anomalies that are not visible to the human eye. It is not recommended for ordinary verification purposes.
+
+If you don't specify otherwise, in one of the ways described below, then the default match level is STRICT.
+
+## How to specify a match level
+There are several ways to set the match level, ranging from setting the match level for a number of tests to setting the match level of a specific region of one particular checkpoint:
+
+- **Setting a match level for multiple tests:** Use the method setMatchLevel method to set a match level in a configuration object, and then use the method eyes.setConfiguration on each Eyes instance before calling the open method. This sets the default match level for all subsequent checkpoints in tests executed by that eyes instance.
+
+- **Setting a match level for a series of checkpoints:** Use a call to eyes. setMatchLevel method at any point during a test, to change the default match level of all subsequent checkpoints on that eyes instance.
+
+- **Setting a match level for a specific checkpoint:** You can use the check Fluent APImatchLevel method to set the match level for a particular checkpoint, overriding the default set at the eyes instance level.
+
+- **Setting the match level in a region of a checkpoint:** Set the match level for a defined region or regions of a specific checkpoint using one of the following check Fluent API methods:
+
+strict(regions)
+layout(regions)
+content(regions)
+exact"(regions)
+
+Outside of these regions the page is matched using the match level set for that checkpoint, or if not defined, the checkpoint set for the eyes instance.
+
+You can also set a match level region within a particular step using the Eyes Test Manager. This is then applied to all future test runs of the checkpoint for that step. For more information see Add special regions to the Step baseline and checkpoint.
+
+Previewing the effect of a match level
+You can preview the impact of a particular match level while reviewing test results in the Eyes Test Manager Step and Test editors. This feature allows you to view the results of a step in a test run at one match level, and to see what would have been the results had the test been run with a different match level. For more details see Preview the step images using match level options.
