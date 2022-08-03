@@ -1,0 +1,56 @@
+# List Page Coverage by Page ID
+Lists the results of sessions page coverage in a batch by page ID.
+
+## Request
+```
+GET batches/{BatchId}/pagecoveragebypageid?pageId=<pageId>
+```
+### Parameters
+
+| Name      | Type   | In     			| Description
+| --------- | ------ | -----------------| ------------------------------------
+| batchId   | string | path   			| The Batch's ID or Pointer ID.
+| PageId	| string | parameter(opt)   | The Page's ID (optional parameter)
+
+## Response Example
+```json
+{
+   "byPageSummaryResult":[
+      {
+         "pageId":"fbc9774c-eb4a-4798-8711-8e6890848870",
+         "byPageIdPageCoverageSummary":{
+            "totalPageCoveragePercentage":71,
+            "environmentsPageCoveragePercentage":[
+               {
+                  "env":{
+                     "os":"linux",
+                     "app":"firefox",
+                     "viewport":{
+                        "Width":1040,
+                        "Height":1920
+                     }
+                  },
+                  "pageCoveragePercentage":100
+               },
+               {
+                  "env":{
+                     "os":"windows 10",
+                     "app":"chrome",
+                     "viewport":{
+                        "Width":600,
+                        "Height":800
+                     }
+                  },
+                  "pageCoveragePercentage":42
+               }
+            ]
+         }
+      }
+   ]
+}
+```
+
+## cURL Example
+```
+curl -H "X-Eyes-Api-Key: <your-api-key>" -X GET "https://eyes.applitools.com/api/v1/batches/<some-batch-id>/pagecoveragebypageid?pageId=<some-page-id>" 
+```
