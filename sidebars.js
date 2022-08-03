@@ -14,23 +14,30 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: 'category',
-      label: 'Getting Started',
+      label: 'Overview',
       collapsible: false,
       items: [
         {
           type: 'category',
-          label: 'Platform Overview',
+          label: 'Platform',
           items: [
             'platform/applitools-eyes/index',
             'platform/applitools-ufg',
             'platform/applitools-nmg',
           ],
         },
-        'getting-started/adding-applitools',
-        'getting-started/retrieving-api-key',
-        'getting-started/analyzing-differences',
-        'getting-started/match-level',
-        'getting-started/root-cause-analysis',
+        {
+          type: 'category',
+          label: 'Getting Started',
+          items: [
+            'getting-started/adding-applitools',
+            'getting-started/retrieving-api-key',
+            'getting-started/analyzing-differences',
+            'getting-started/match-level',
+            'getting-started/root-cause-analysis',
+          ],
+        },
+        
       ],
     },
     {
@@ -79,12 +86,12 @@ const sidebars = {
             {
               type: 'category',
               label: 'XCUI',
-              items: ['quickstart/web/leanft/leanft-c', 'quickstart/web/leanft/leanft-javascript',]
+              items: ['quickstart/mobile/xcui/ios', 'quickstart/mobile/xcui/android',]
             },
             {
               type: 'category',
               label: 'Calabash',
-              items: ['quickstart/web/leanft/leanft-c', 'quickstart/web/leanft/leanft-javascript',]
+              items: ['quickstart/mobile/calabash/ios', 'quickstart/mobile/calabash/android',]
             },
           ],
         },
