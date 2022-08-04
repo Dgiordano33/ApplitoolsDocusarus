@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Appltiools Docs',
+  title: 'Applitools Docs',
   tagline: 'Get started visual testing today ',
   url: 'https://applitools-docusarus.vercel.app',
   baseUrl: '/',
@@ -79,43 +79,79 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         links: [
           {
-            title: 'Docs',
+            title: 'Product',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Platform',
+                href: '/docs/intro',
+              },
+              {
+                label: 'Eyes',
+                href: '/docs/intro',
+              },
+              {
+                label: 'Ultrafast Grid',
+                href: '/docs/intro',
+              },
+              {
+                label: 'Native Mobile Grid',
+                href: '/docs/intro',
+              },
+              {
+                label: 'Integrations',
+                href: '/docs/intro',
+              },
+              {
+                label: 'Pricing',
+                href: '/docs/intro',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Resources',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
+                label: 'Test Automation University',
                 href: 'https://discordapp.com/invite/docusaurus',
               },
               {
-                label: 'Twitter',
+                label: 'Blog',
+                href: '/blog',
+              },
+              {
+                label: 'Resource Library',
+                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              },
+              {
+                label: 'Future of Testing',
+                href: 'https://twitter.com/docusaurus',
+              },
+              {
+                label: 'Insights and Reports',
                 href: 'https://twitter.com/docusaurus',
               },
             ],
           },
           {
-            title: 'More',
+            title: 'Reach Out',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
+                label: 'Start a Trial',
+                href: 'https://github.com/facebook/docusaurus',
               },
               {
-                label: 'GitHub',
+                label: 'Request a Demo',
+                href: 'https://github.com/facebook/docusaurus',
+              },
+              {
+                label: 'Contact Sales',
+                href: 'https://github.com/facebook/docusaurus',
+              },
+              {
+                label: 'Enter Support Ticket',
                 href: 'https://github.com/facebook/docusaurus',
               },
             ],
