@@ -25,7 +25,7 @@ const sidebars = {
           type: 'category',
           label: 'Platform',
           items: [
-            'platform/applitools-eyes/index',
+            'platform/applitools-eyes',
             'platform/applitools-ufg',
             'platform/applitools-nmg',
           ],
@@ -94,12 +94,12 @@ const sidebars = {
             {
               type: 'category',
               label: 'XCUI',
-              items: ['quickstart/mobile/xcui/iOS', 'quickstart/mobile/xcui/android',]
+              items: ['quickstart/mobile/xcui/ios', 'quickstart/mobile/xcui/android',]
             },
             {
               type: 'category',
               label: 'Calabash',
-              items: ['quickstart/mobile/calabash/iOS', 'quickstart/mobile/calabash/android',]
+              items: ['quickstart/mobile/calabash/ios', 'quickstart/mobile/calabash/android',]
             },
           ],
         },
