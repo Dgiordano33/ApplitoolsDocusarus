@@ -57,31 +57,22 @@ const config = {
         },
         items: [
           {
-            type: 'doc',
-            docId: 'intro',
+            href: 'https://applitools.com/platform',
+            label: 'Products',
             position: 'left',
-            label: 'Platform',
           },
           {
-            type: 'doc',
-            docId: 'intro',
+            href: 'https://applitools.com/pricing',
+            label: 'Pricing',
             position: 'left',
-            label: 'Quick Starts',
           },
           {
-            type: 'doc',
-            docId: 'intro',
+            href: 'https://applitools.com/company',
+            label: 'Company',
             position: 'left',
-            label: 'Guides',
           },
           {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'References',
-          },
-          {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/applitools',
             label: 'GitHub',
             position: 'right',
           },
@@ -136,7 +127,9 @@ const config = {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      
     }),
+
 };
 
 module.exports = config;
