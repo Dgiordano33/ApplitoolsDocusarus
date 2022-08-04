@@ -1,0 +1,99 @@
+---
+title: Testing Angular Storybook Components with Applitools
+sidebar_label: Storybook Angular
+---
+
+# Storybook Angular Tutorial
+
+## How it works
+The Applitools Eyes Storybook SDK does not require you to change any code! You simply need to add Applitools SDK as a dependency and run the CLI command!
+
+Our SDK simply opens up different stories from your project and upload the DOM to our Visual grid servers. It uploads multiple DOMs concurrently. The visual grid receives these DOMs and renders them in parallel using real browsers. Then it take pictures of each stories. And finally, these pictures are then sent to our AI servers to check for differences.
+
+The picture below shows how it works
+
+![storybook architecture](/img/storybook-marketecture.png)
+
+## Prerequisites:
+1. Install [NodeJS](https://nodejs.org/en/)  **Needs Node.js 10.x or higher**
+2. Install [Storybook CLI](https://storybook.js.org/) by running `npx -p @storybook/cli sb init`.
+  :::tip Note
+    We need Storybook alpha at the time of the writing because previous versions of Storybook doesn't support Webpack 4
+  :::
+3. Sign up for [Applitools Account](https://applitools.com/users/developer)
+  
+4. Get the Applitools API key.
+
+![api key](/img/api-key.gif)
+
+
+5. Set the APPLITOOLS_API_KEY environment variable on your computer to this API key value.
+
+   - For Mac and Linux terminals:
+
+      `export APPLITOOLS_API_KEY=Your_API_Key_Here`
+
+    - For Windows command prompt:
+
+      `set APPLITOOLS_API_KEY=Your_API_Key_Here`
+
+    - For Windows PowerShell:
+
+      `Set-Variable -Name "APPLITOOLS_API_KEY" -Value "Your_API_Key_Here"`
+
+6. Clone the tutorial repository.
+
+`git clone https://github.com/applitools/tutorial-storybook-angular.git`
+
+7. Navigate to the **tutorial-storybook-angular** folder
+
+  `cd tutorial-storybook-angular`
+
+8. Install the NPM modules. This will installl all the dependencies including the **eyes-storybook** SDK.
+
+  `npm install`
+
+  :::tip Adding the `eyes-storybook` to an existing project
+  If you have an existing Storybook project, you can add `eyes-storybook` SDK by running the following command at the root of your project.
+  
+  `npm install --save-dev @applitools/eyes-storybook`
+  :::
+
+## Running the test
+
+1. Run the following command at the root of your project (that has `.storybook`)
+
+`npx eyes-storybook`
+
+:::tip Notes:
+`npx` comes as part of Node.js installation. It automatically runs the `eyes-storybook` executable.
+
+Alternatively, if you don’t want to use `npx`, or are using npm version 5 or less, you can manually add the "eyes-storybook" script your Storybook package.json file :
+```json
+"scripts": {
+  "eyes-storybook": "eyes-storybook"
+},
+```
+Then run `npm run eyes-storybook` to run your first Storybook test.
+:::
+
+
+You should see that it takes about 10 seconds to startup and complete all the tests.
+
+![storybook angular run test](/img/storybook-angular-run-test.png)
+
+
+  You should see the results of all the components in seconds.
+![storybook architecture](/img/storybook-angular-results.gif)
+
+## Customizations
+The SDK provides additional tools to customize how you run, please check them out at the [Applitools Storybook repo](https://www.npmjs.com/package/@applitools/eyes-storybook).
+
+
+### [Advanced Configuration](https://github.com/applitools/eyes.sdk.javascript1/tree/master/packages/eyes-storybook#advanced-configuration)
+
+:::tip Note
+Please see the Github repo for all the [latest configuration features](https://github.com/applitools/eyes.sdk.javascript1/tree/master/packages/eyes-storybook#advanced-configuration)
+:::
+
+![storybook architecture](/img/storybook-common-adv-config.png)

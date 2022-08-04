@@ -1,7 +1,131 @@
 ---
 sidebar_position: 1
-title: Selenium IDE
+title: Using Selenium IDE and Applitools
+sidebar_label: Selenium IDE
 ---
 import PartialOutro from '@site/docs/_partials/_partials-outro_.mdx'
+
+
+# Selenium IDE Tutorial
+The following video shows how to use the **Applitools for Selenium IDE** browser extension and goes over the following features: Installation, creating and running tests, adding Visual checkpoints, using the Ultrafast Grid, doing Root cause Analysis of a Visual bug, and doing Auto-maintenance -- **all without writing a single line of code!🤓**
+
+<Video embedUrl="https://www.youtube.com/embed/Ogh-dDhM_hw?rel=0" />
+
+## Selenium IDE videos
+If you are new to the Selenium IDE itself (which is a different browser extension) that "Applitools for Selenium IDE" extension depends on, the following four videos will get you started.
+
+
+<Video embedUrl="https://www.youtube.com/embed/Lk2T1yv_kO8?rel=0" />
+
+<Video embedUrl="https://www.youtube.com/embed/aWyKKIIepxQ?rel=0" />
+
+<Video embedUrl="https://www.youtube.com/embed/f10IlJSE_io?rel=0" />
+
+<Video embedUrl="https://www.youtube.com/embed/blbFWJYtmI0?rel=0" />
+
+
+
+## Getting Started
+
+1. First install the latest version of the Selenium IDE from the [Chrome Store](https://chrome.google.com/webstore/detail/selenium-ide/mooikfkahbdckldjjndioackbalphokd) or from the [Firefox store](https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/) .
+
+2. Install the latest version of the Applitools extension from the [Chrome Store](https://chrome.google.com/webstore/detail/applitools-for-selenium-i/fbnkflkahhlmhdgkddaafgnnokifobik) or from the [Firefox store](https://addons.mozilla.org/en-US/firefox/addon/applitools-for-selenium-ide/). At this point you will have a new icon in your navigation bar which contains the Applitools Eyes logo.
+
+3. Clicking it will show a window prompting you to open the IDE if it's not already open.
+
+![Selenium Open IDE](/img/selenium-ide/open-ide.png)
+
+4. Once the IDE is open, the Eyes extension window will prompt you for your Applitools API key. See [this support article](https://applitools.com/docs/topics/overview/obtain-api-key.html) for details on how to get yours.
+
+![Enter API Key](/img/selenium-ide/enter-api-key.png)
+
+5. After you've pasted in your API key click `Apply` and the window will say `Successfully connected with Selenium IDE`.
+
+![Connected](/img/selenium-ide/successfully-connected.png)
+
+:::tip NOTE
+
+1. If you want to configure the extension's behavior or visit your Eyes test dashboard, click the links provided in the extension window. See [Configuring The Extension](/selenium-ide.html#configuring-the-extension) below for configuration details.
+
+2. Specify a branch or a parent branch. For more details on branching see [the Eyes branching documentation](https://applitools.com/docs/topics/test-manager/pages/tm-page-branch-baselines.html)
+
+:::
+
+## Ultrafast Grid feature
+
+You can choose to run tests locally but render Visual checkpoints on the Ultrafast Grid. Please check out the tutorial video above for more information.
+![Selenium](/img/selenium-ide/visual-grid-options.png)
+
+## Available Commands
+
+Once the extension is connected with your Applitools Eyes account, you can head over to Selenium IDE and start updating your tests with commands for visual testing.
+
+When in record mode in Selenium IDE, the Eyes extension will list the available visual testing commands. You can add a command to your test by clicking on it from this list.
+
+![Selenium](/img/selenium-ide/record-mode.png)
+
+Here's a breakdown of each command.
+
+### Eyes Check Window
+The `eyes check window` command sets a visual checkpoint on the entire window. It will scroll throughout the page and build a full page screenshot of it.
+
+It takes an optional argument of a name to display in the test results. This goes in the `target` input field in the IDE. If a name is not provided the URL of the current page will be used as the name.
+
+### Eyes Check Element
+The `eyes check element` command sets a visual checkpoint on an element. Note that this command will not scroll the element into view. Also, the element has to fit inside of the viewport for this command to work.
+
+You can interactively select an element in the IDE, or identify it with standard locators in the `target` input field.
+
+Similar to `eyes check window`, this command takes an optional argument of a name. If one is not provided the URL of the current page will be used.
+
+### Eyes Set Viewport Size
+The `eyes set viewport size` command resizes the browser to match the viewport size (excluding window borders). Setting a viewport size is useful for ensuring consistent test results. It is also required for every visual test since it is used to determine the layout of your app and its elements.
+
+It takes a required argument of `WidthxHeight` (e.g. `1280x800`).
+
+:::tip NOTE:
+If this command is not used prior to performing a check command a warning message will appear in the test log output in the IDE encouraging its use for reliable results.
+:::
+
+### Eyes Set Match Timeout
+The `eyes set match timeout` sets the match timeout for the subsequent visual check points. More retries will be attempted when differences are found as a means to wait for the page to fully stabilize visually.
+
+A higher timeout means more retries will be made. The default timeout is 2 seconds.
+
+This takes a required argument of the new wait time (in milliseconds).
+
+### Eyes Set Match Level
+The `eyes set match level` sets the match level for the subsequent check points. The default is `Strict`.
+
+This takes a required argument of the new match level to be used. The options are `Exact`, `Strict`, `Content`, and `Layout`.
+
+
+## Configuring the Extension
+There is additional behavior you have access to within the Eyes extension's settings window. To access it click the extension icon in your browser navigation pane and click `Open settings`.
+
+There are three tabs available in the settings window - `Tests`, `Account`, an `Advanced`.
+
+### Tests Tab
+![Selenium](/img/selenium-ide/configure-tests.png)
+
+In the `Tests` tab you can:
+
+- Toggle visual checkpoints so they can be skipped without removing them from your tests
+- Toggle [Root Cause Analysis](https://applitools.com/docs/topics/test-manager/viewers/root-cause-analysis.html)
+- Toggle if we want to automatically open the Test result in Applitools after the test runs (Recommended)
+
+### Account Tab
+
+![Selenium](/img/selenium-ide/configure-account.png)
+
+In the `Account` tab you can change your API key and change the server URL (e.g., if you have an on-premise or dedicated cloud server instance of Applitools Eyes running).
+
+### Advanced Tab
+
+![Selenium](/img/selenium-ide/configure-advanced.png)
+
+And in the `Advanced` tab you can specify an alternate IDE Extension ID.
+
+This functionality is typically for on-premise users who are behind a firewall and unable to get the Selenium IDE extension from the public store. When receiving it from a different source it will have a different ID than the publicly available one. To use it, input the alternate ID here.
 
 <PartialOutro/>

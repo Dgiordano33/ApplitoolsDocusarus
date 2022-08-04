@@ -60,8 +60,12 @@ const sidebars = {
               label: 'WebdriverIO',
               items: ['quickstart/web/webdriver/webdriverio-4','quickstart/web/webdriver/webdriverio-5','quickstart/web/webdriver/webdriverio-6',]
             },
+            {
+              type: 'category',
+              label: 'Playwright',
+              items: ['quickstart/web/playwright/playwright','quickstart/web/playwright/playwright-typescript-ufg','quickstart/web/playwright/playwright-typescript-ufg',]
+            },
             'quickstart/web/puppeteer',
-            'quickstart/web/playwright',
             'quickstart/web/protractor',
             'quickstart/web/testcafe',
             'quickstart/web/watir',
@@ -102,13 +106,18 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Codeless',
-          items: ['quickstart/codeless/selenium-ide', 'quickstart/codeless/pdfs', 'quickstart/codeless/uft'],
+          label: 'Screenshots SDKs',
+          items: ['quickstart/screenshots/cli', 'quickstart/screenshots/java', 'quickstart/screenshots/javascript', 'quickstart/screenshots/c-sharp', 'quickstart/screenshots/python', 'quickstart/screenshots/ruby', 'quickstart/screenshots/php', 'quickstart/screenshots/xctest-swift', 'quickstart/screenshots/xctest-objective-c'],
         },
         {
           type: 'category',
-          label: 'Screenshots',
-          items: ['quickstart/screenshots/cli', 'quickstart/screenshots/c-sharp', 'quickstart/screenshots/java', 'quickstart/screenshots/javascript', 'quickstart/screenshots/python', 'quickstart/screenshots/ruby', 'quickstart/screenshots/php', 'quickstart/screenshots/xctest-swift', 'quickstart/screenshots/xctest-objective-c'],
+          label: 'Storybook SDKs',
+          items: ['quickstart/storybook/storybook-react', 'quickstart/storybook/storybook-vue','quickstart/storybook/storybook-angular',]
+        },
+        {
+          type: 'category',
+          label: 'Codeless SDKs',
+          items: ['quickstart/codeless/selenium-ide', 'quickstart/codeless/pdfs'],
         },
       ],
     },

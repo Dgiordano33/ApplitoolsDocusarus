@@ -1,0 +1,53 @@
+---
+title: Playwright and Applitools Tutorial For Testing Web Apps
+sidebar_label: Playwright
+---
+
+import PartialOutro from '@site/docs/_partials/_partials-outro_.mdx'
+
+# Playwright Tutorial
+
+There are two ways to automate visual tests with Playwright:
+
+1. Using the [Applitools Ultrafast Grid](./playwright-typescript-ufg.md)
+2. Using the [Applitools Classic runner](./playwright-typescript-classic.md)
+
+Your tests must use one or the other – not both.
+If you are new to Applitools and not sure which to pick,
+read the sections below to help you decide.
+Typically, **Ultrafast Grid is the recommended approach**.
+
+::: tip Tutorial Links for Both Approaches
+1. [Playwright TypeScript with the Ultrafast Grid](./playwright-typescript-ufg.md)
+2. [Playwright TypeScript with the Classic Runner](./playwright-typescript-classic.md)
+
+*Note:* These tutorials use TypeScript,
+but the Applitools Eyes SDK for Playwright may also be used with JavaScript.
+:::
+
+
+## Using the Ultrafast Grid
+
+Using [Applitools Ultrafast Grid](https://applitools.com/tutorials/overview/applitools-ultrafast-grid.html).
+With this approach, you run your visual test one time locally,
+and [`VisualGridRunner`](https://applitools.com/docs/api/eyes-sdk/index-gen/class-visualgridrunner-playwright-javascript.html)
+uploads the visual snapshots to be rendered in the Ultrafast Grid against any browser configurations you specify.
+You don't need to maintain different browser configurations yourself.
+The Ultrafast Grid performs cross-browser testing much faster than local runs, too.
+
+If you want to try the Ultrafast Grid,
+take the tutorial for [Playwright TypeScript with the Ultrafast Grid](./playwright-typescript-ufg.md).
+
+
+## Using the Classic Runner
+
+With the [Classic runner](https://applitools.com/docs/topics/overview/overview-writing-tests-with-eyes-runner.html),
+you capture visual snapshots on your local machine using
+[`ClassicRunner`](https://applitools.com/docs/api/eyes-sdk/index-gen/class-classicrunner-playwright-javascript.html).
+You are limited to testing only the browsers configured locally,
+and you must run visual test instances for each browser you want to cover.
+
+If you want to try the classic runner,
+take the tutorial for [Playwright TypeScript with the Classic Runner](./playwright-typescript-classic.md).
+
+<PartialOutro/>

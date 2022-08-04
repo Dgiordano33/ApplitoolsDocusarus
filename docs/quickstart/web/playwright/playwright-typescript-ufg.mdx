@@ -1,0 +1,307 @@
+---
+title: Playwright Typescript UFG and Applitools Tutorial
+sidebar_label: Playwright Typscript UFG
+---
+
+import PartialOutro from '@site/docs/_partials/_partials-outro_.mdx'
+
+
+# Tutorial: Playwright TypeScript with the Ultrafast Grid
+
+This tutorial will show you how to automate visual tests using the Applitools Ultrafast Grid with Playwright in TypeScript.
+[Applitools Ultrafast Test Cloud](https://applitools.com/platform/)
+can help you catch functional and visual problems that traditional automation struggles to find.
+It can also help you to scale your tests to cover all browsers and devices in seconds.
+
+In this tutorial, you will:
+
+1. Set up your local machine for testing.
+2. Clone the example project repository.
+3. Learn how to automate visual testing with Applitools Eyes.
+4. Run the visual tests and review results in the Applitools dashboard.
+
+After setting up your machine,
+this tutorial should take **about 15 minutes** to complete.
+If you get stuck along the way,
+please [reach out to us for help](https://help.applitools.com/hc/en-us/requests/new)!
+
+::: tip Quickstart
+If you prefer a quickstart instead of a full tutorial,
+clone the [example repository](https://github.com/applitools/example-playwright-typescript-ufg)
+and follow the [README](https://github.com/applitools/example-playwright-typescript-ufg/blob/master/README.md) instructions!
+:::
+
+::: tip JavaScript Support
+This tutorial uses TypeScript, but the Applitools Eyes SDK for Playwright also works with JavaScript.
+:::
+
+
+## Recognizing project structure
+
+The example project uses:
+
+* [TypeScript](https://www.typescriptlang.org/) as the programming language
+* [Playwright](https://playwright.dev/) for browser automation
+* [Playwright Test](https://playwright.dev/docs/api/class-test) as the core test framework
+* [Chromium](https://www.chromium.org/chromium-projects/) as the local browser for testing
+* [npm](https://www.npmjs.com/) for dependency management
+* [Applitools Eyes](https://applitools.com/platform/eyes/) for visual testing
+* [Applitools Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/) for cross-browser execution
+
+
+## Setting up your machine
+
+You'll need a few things to run this tutorial:
+
+1. An [Applitools account](https://auth.applitools.com/users/register), which you can register for free.
+2. A recent version of [Node.js](https://nodejs.org/en/download/).
+3. A good TypeScript editor like [Visual Studio Code](https://code.visualstudio.com/docs/languages/typescript).
+
+
+## Downloading the example project
+
+The example project is located at
+[https://github.com/applitools/example-playwright-typescript-ufg](https://github.com/applitools/example-playwright-typescript-ufg).
+Clone this repository to your local machine:
+
+```
+$ git clone https://github.com/applitools/example-playwright-typescript-ufg.git
+$ cd example-playwright-typescript-ufg
+```
+
+*Note: If you don't have Git installed,
+then instead of running `git clone`,
+you can [download the project as a ZIP file](https://github.com/applitools/example-playwright-typescript-ufg/archive/refs/heads/master.zip)
+and extract it.*
+
+
+## Understanding the dependencies
+
+The example project uses [npm](https://www.npmjs.com/) for package management.
+It contains the following dependencies for the 
+[Applitools Eyes SDK for Playwright](https://www.npmjs.com/package/@applitools/eyes-playwright)
+as well as Playwright itself:
+
+```json
+  "devDependencies": {
+    "@applitools/eyes-playwright": "^1.12.1",
+    "@playwright/test": "^1.22.2"
+  }
+```
+
+::: tip Adding Applitools to Another Playwright Project?
+This example project already has the Applitools Eyes SDK as a dependency.
+If you want to add the Applitools Eyes SDK as a new dependency to another Playwright project,
+run the following commands:
+
+```
+$ npm install --save-dev @applitools/eyes-playwright
+```
+:::
+
+
+## Understanding the code
+
+The project contains one visual test case,
+which is located at `tests/acme-bank.spec.ts`.
+
+`acme-bank.spec.ts` is a Playwright test module that covers login behavior for the [ACME Bank demo web app](https://demo.applitools.com).
+It uses the [Applitools Eyes SDK for Playwright](https://www.npmjs.com/package/@applitools/eyes-playwright)
+to capture visual checkpoints.
+The code is rather concise.
+In-line comments explain every section.
+Read it top to bottom to understand how it works:
+
+```javascript
+// This test case spec contains everything needed to run a full visual test against the ACME bank site.
+// It runs the test once locally, and then it performs cross-browser testing against multiple unique browsers in Applitools Ultrafast Grid.
+
+import { test } from '@playwright/test';
+import { BatchInfo, Configuration, VisualGridRunner, BrowserType, DeviceName, ScreenOrientation, Eyes, Target } from '@applitools/eyes-playwright';
+
+// Applitools objects to share for all tests
+export let Batch: BatchInfo;
+export let Config: Configuration;
+export let Runner: VisualGridRunner;
+
+// This method sets up the configuration for running visual tests in the Ultrafast Grid.
+// The configuration is shared by all tests in a test suite, so it belongs in a `beforeAll` method.
+// If you have more than one test class, then you should abstract this configuration to avoid duplication.
+test.beforeAll(async() => {
+
+  // Create the runner for the Ultrafast Grid.
+  // Concurrency refers to the number of visual checkpoints Applitools will perform in parallel.
+  // Warning: If you have a free account, then concurrency will be limited to 1.
+  Runner = new VisualGridRunner({ testConcurrency: 5 });
+
+  // Create a new batch for tests.
+  // A batch is the collection of visual checkpoints for a test suite.
+  // Batches are displayed in the dashboard, so use meaningful names.
+  Batch = new BatchInfo({name: 'Applitools Example: Playwright TypeScript with the Ultrafast Grid'});
+
+  // Create a configuration for Applitools Eyes.
+  Config = new Configuration();
+
+  // Set the batch for the config.
+  Config.setBatch(Batch);
+
+  // Add 3 desktop browsers with different viewports for cross-browser testing in the Ultrafast Grid.
+  // Other browsers are also available, like Edge and IE.
+  Config.addBrowser(800, 600, BrowserType.CHROME);
+  Config.addBrowser(1600, 1200, BrowserType.FIREFOX);
+  Config.addBrowser(1024, 768, BrowserType.SAFARI);
+
+  // Add 2 mobile emulation devices with different orientations for cross-browser testing in the Ultrafast Grid.
+  // Other mobile devices are available, including iOS.
+  Config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+  Config.addDeviceEmulation(DeviceName.Nexus_10, ScreenOrientation.LANDSCAPE);
+});
+
+// This "describe" method contains related test cases with per-test setup and cleanup.
+// In this example, there is only one test.
+test.describe('ACME Bank', () => {
+
+  // Test-specific objects
+  let eyes: Eyes;
+
+  // This method sets up each test with its own Applitools Eyes object.
+  test.beforeEach(async ({ page }) => {
+
+    // Create the Applitools Eyes object connected to the VisualGridRunner and set its configuration.
+    eyes = new Eyes(Runner, Config);
+
+    // Open Eyes to start visual testing.
+    // Each test should open its own Eyes for its own snapshots.
+    // It is a recommended practice to set all four inputs below:
+    await eyes.open(
+      page,                             // The Playwright page object to "watch"
+      'ACME Bank',                      // The name of the app under test
+      test.info().title,                // The name of the test case
+      { width: 1024, height: 768 });    // The viewport size for the local browser
+  });
+  
+  // This test covers login for the Applitools demo site, which is a dummy banking app.
+  // The interactions use typical Playwright calls,
+  // but the verifications use one-line snapshot calls with Applitools Eyes.
+  // If the page ever changes, then Applitools will detect the changes and highlight them in the dashboard.
+  // Traditional assertions that scrape the page for text values are not needed here.
+  test('log into a bank account', async ({ page }) => {
+
+    // Load the login page.
+    await page.goto('https://demo.applitools.com');
+
+    // Verify the full login page loaded correctly.
+    await eyes.check('Login page', Target.window().fully());
+
+    // Perform login.
+    await page.locator('id=username').fill('andy');
+    await page.locator('id=password').fill('i<3pandas');
+    await page.locator('id=log-in').click();
+
+    // Verify the full main page loaded correctly.
+    // This snapshot uses LAYOUT match level to avoid differences in closing time text.
+    await eyes.check('Main page', Target.window().fully().layout());
+  });
+  
+  // This method performs cleanup after each test.
+  test.afterEach(async () => {
+
+    // Close Eyes to tell the server it should display the results.
+    await eyes.closeAsync();
+
+    // Warning: `eyes.closeAsync()` will NOT wait for visual checkpoints to complete.
+    // You will need to check the Applitools dashboard for visual results per checkpoint.
+    // Note that "unresolved" and "failed" visual checkpoints will not cause the Playwright test to fail.
+
+    // If you want the Playwright test to wait synchronously for all checkpoints to complete, then use `eyes.close()`.
+    // If any checkpoints are unresolved or failed, then `eyes.close()` will make the Playwright test fail.
+  });
+});
+
+test.afterAll(async() => {
+
+  // Close the batch and report visual differences to the console.
+  // Note that it forces Playwright to wait synchronously for all visual checkpoints to complete.
+  const results = await Runner.getAllTestResults();
+  console.log('Visual test results', results);
+});
+```
+
+
+## Preparing for test execution
+
+Before running the visual test,
+you must [find your Applitools API key](https://applitools.com/tutorials/getting-started/setting-up-your-environment.html)
+and set it as an environment variable named `APPLITOOLS_API_KEY`.
+
+On macOS and Linux:
+
+```
+$ export APPLITOOLS_API_KEY=<your-api-key>
+```
+
+On Windows:
+
+```
+> set APPLITOOLS_API_KEY=<your-api-key>
+```
+
+::: tip Environment Variable Trouble
+If you have trouble setting the `APPLITOOLS_API_KEY` environment variable,
+you can hard-code your API key into the test case
+by adding the following line to the bottom of the `beforeAll` method:
+
+```javascript
+Config.setApiKey("<your-api-key>");
+```
+
+However, be warned: **hard-coding secrets is poor practice**.
+Do this only temporarily for debugging,
+and *never* commit hard-coded secrets to version control.
+:::
+
+::: tip Applitools Eyes Server
+By default, tests will use the public Applitools Eyes server at `eyes.applitools.com`.
+However, if your team is using a [private Applitools Eyes server](https://help.applitools.com/hc/en-us/articles/360007189231-The-different-deployment-modes),
+you can target it by setting the `APPLITOOLS_SERVER_URL` environment variable.
+:::
+
+Next, you must install project dependencies and the Playwright browsers.
+Run the following commands (which work for any OS):
+
+```
+$ npm install
+$ npx playwright install
+```
+
+
+## Running the visual test
+
+To launch the tests, run:
+
+```
+$ npx playwright test --project chromium
+```
+
+You can run against `firefox` and `webkit` instead of `chromium`.
+Since this project uses the Ultrafast Grid, it is recommended to use only one browser for local execution.
+
+Once your tests run, you should see results in the
+[Applitools dashboard](https://applitools.com/docs/topics/test-manager/pages/tm-ui-overview.html).
+For your batch, there should be 5 tests (one for each browser configuration),
+each with 2 visual snapshots.
+
+You can also change the web page to inject visual bugs:
+
+```javascript
+// await page.goto('https://demo.applitools.com');
+await page.goto('https://demo.applitools.com/index_v2.html');
+```
+
+If you rerun the tests, then they should yield "unresolved" results for you to review.
+Visual differences will be highlighted in magenta.
+It's up to you to accept (👍) or reject (👎) the changes.
+Applitools will remember your decisions for future analysis.
+
+
+<PartialOutro/>
