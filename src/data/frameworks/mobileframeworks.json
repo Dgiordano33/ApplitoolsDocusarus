@@ -13,13 +13,23 @@
         "href" : "/quickstart/mobile/espresso"
     },
     {
-        "name": "Calabash",
+        "name": "Calabash iOS",
         "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
-        "href" : "/quickstart/mobile/cypress"
+        "href" : "/quickstart/mobile/calabash/apple-ios"
     },
     {
-        "name": "XCUI",
+        "name": "Calabash Android",
+        "logo": "https://avatars0.githubusercontent.com/u/66567938?v=4",
+        "href" : "/quickstart/mobile/calabash/android"
+    },
+    {
+        "name": "XCUI iOS",
         "logo": "https://applitools.com/wp-content/uploads/2022/08/xcui-test.png",
-        "href" : "/quickstart/mobile/cypress"
+        "href" : "/quickstart/mobile/xcui/apple-ios"
+    },
+    {
+        "name": "XCUI Android",
+        "logo": "https://applitools.com/wp-content/uploads/2022/08/xcui-test.png",
+        "href" : "/quickstart/mobile/xcui/android"
     }
 ]

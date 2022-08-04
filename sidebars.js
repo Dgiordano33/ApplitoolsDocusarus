@@ -57,17 +57,17 @@ const sidebars = {
             {
               type: 'category',
               label: 'Selenium',
-              items: ['quickstart/web/selenium/java', 'quickstart/web/selenium/javascript', 'quickstart/web/selenium/python','quickstart/web/selenium/c-sharp', 'quickstart/web/selenium/ruby', 'quickstart/web/selenium/php']
+              items: ['quickstart/web/selenium/index','quickstart/web/selenium/java', 'quickstart/web/selenium/javascript', 'quickstart/web/selenium/python','quickstart/web/selenium/c-sharp', 'quickstart/web/selenium/ruby', 'quickstart/web/selenium/php']
             },
             {
               type: 'category',
               label: 'WebdriverIO',
-              items: ['quickstart/web/webdriver/webdriverio-4','quickstart/web/webdriver/webdriverio-5','quickstart/web/webdriver/webdriverio-6',]
+              items: ['quickstart/web/webdriver/index','quickstart/web/webdriver/webdriverio-4','quickstart/web/webdriver/webdriverio-5','quickstart/web/webdriver/webdriverio-6',]
             },
             {
               type: 'category',
               label: 'Playwright',
-              items: ['quickstart/web/playwright/playwright','quickstart/web/playwright/playwright-typescript-ufg','quickstart/web/playwright/playwright-typescript-classic',]
+              items: ['quickstart/web/playwright/index','quickstart/web/playwright/playwright','quickstart/web/playwright/playwright-typescript-ufg','quickstart/web/playwright/playwright-typescript-classic',]
             },
             'quickstart/web/puppeteer',
             'quickstart/web/protractor',
@@ -88,18 +88,18 @@ const sidebars = {
             {
               type: 'category',
               label: 'Appium',
-              items: ['quickstart/mobile/appium/appium-native-csharp','quickstart/mobile/appium/appium-native-java', 'quickstart/mobile/appium/appium-native-javascript','quickstart/mobile/appium/appium-native-python','quickstart/mobile/appium/appium-native-ruby','quickstart/mobile/appium/appium-native-php',]
+              items: ['quickstart/mobile/appium/index','quickstart/mobile/appium/appium-native-csharp','quickstart/mobile/appium/appium-native-java', 'quickstart/mobile/appium/appium-native-javascript','quickstart/mobile/appium/appium-native-python','quickstart/mobile/appium/appium-native-ruby','quickstart/mobile/appium/appium-native-php',]
             },
             'quickstart/mobile/espresso',
             {
               type: 'category',
               label: 'XCUI',
-              items: ['quickstart/mobile/xcui/ios', 'quickstart/mobile/xcui/android',]
+              items: ['quickstart/mobile/xcui/apple-ios', 'quickstart/mobile/xcui/android',]
             },
             {
               type: 'category',
               label: 'Calabash',
-              items: ['quickstart/mobile/calabash/ios', 'quickstart/mobile/calabash/android',]
+              items: ['quickstart/mobile/calabash/apple-ios', 'quickstart/mobile/calabash/android',]
             },
           ],
         },
