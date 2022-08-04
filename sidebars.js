@@ -18,6 +18,10 @@ const sidebars = {
       collapsible: false,
       items: [
         {
+          type: 'doc',
+          id: 'intro',
+        },
+        {
           type: 'category',
           label: 'Platform',
           items: [
@@ -63,7 +67,7 @@ const sidebars = {
             {
               type: 'category',
               label: 'Playwright',
-              items: ['quickstart/web/playwright/playwright','quickstart/web/playwright/playwright-typescript-ufg','quickstart/web/playwright/playwright-typescript-ufg',]
+              items: ['quickstart/web/playwright/playwright','quickstart/web/playwright/playwright-typescript-ufg','quickstart/web/playwright/playwright-typescript-classic',]
             },
             'quickstart/web/puppeteer',
             'quickstart/web/protractor',
