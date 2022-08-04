@@ -94,12 +94,12 @@ const sidebars = {
             {
               type: 'category',
               label: 'XCUI',
-              items: ['quickstart/mobile/xcui/ios', 'quickstart/mobile/xcui/android',]
+              items: ['quickstart/mobile/xcui/iOS', 'quickstart/mobile/xcui/android',]
             },
             {
               type: 'category',
               label: 'Calabash',
-              items: ['quickstart/mobile/calabash/ios', 'quickstart/mobile/calabash/android',]
+              items: ['quickstart/mobile/calabash/iOS', 'quickstart/mobile/calabash/android',]
             },
           ],
         },
