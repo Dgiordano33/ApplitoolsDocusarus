@@ -5,7 +5,7 @@
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
         "frameworkType" : "web",
-        "href" : "/category/appium"
+        "href" : "/quickstart/mobile/appium"
     },
     {
         "name": "Espresso",

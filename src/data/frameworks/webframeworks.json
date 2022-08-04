@@ -5,7 +5,7 @@
         "icon":"SeleniumIcon",
         "shortDescription": "this is short",
         "longDescription": "this is slightly longer",
-        "href" : "/category/selenium",
+        "href" : "/quickstart/web/selenium",
         "frameworkType" : "web",
         "packageManager" : "npm",
         "language" : "JavaScript",
@@ -37,7 +37,7 @@
     {
         "name": "WebDriverIO",
         "logo": "https://applitools.com/wp-content/uploads/2020/08/Webdriver_Hex-1.svg",
-        "href" : "/category/webdriver"
+        "href" : "/quickstart/web/webdriver"
     },
     {
         "name": "Testcafe",
